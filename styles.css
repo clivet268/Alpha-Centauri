@@ -1,0 +1,126 @@
+
+.container-base{
+    border: 1px solid #ccc;
+    border-radius: 8px; 
+    /*width: 1200px;*/
+    /*width: auto; maybe full better -268*/
+    width: auto;
+    height: auto;
+    display: grid;
+    background: #d2e6f8;
+    padding: 12px;
+    grid-template-rows: auto; 
+}
+
+.questionscontainer{
+    border: 1px solid #ccc;
+    border-radius: 8px; 
+    background: #c2d6f8;
+    padding: 2px;
+    padding: 6px;
+    padding: 8px;
+}
+
+.obj-box {
+    text-align: center;
+    padding: 5px;
+    margin-top: 1px;
+    margin-left: 5px;
+    margin-right: 5px;
+
+}
+
+
+.control-bar {
+    display: grid;
+    background: #92b6f8;
+    padding: 10px;
+    gap: 10px;
+    grid-template-columns: 2fr 1fr 1fr 1fr 6fr 1fr 1fr 1fr; 
+}
+
+.questionstable table{
+    display: grid;
+    grid-template-columns: 6fr 1fr 1fr 1fr 1fr 1fr 9fr 1fr;
+    background: #f2f6f8;
+}
+
+.questionstable thead, tbody, tr {
+    display: contents;
+
+}
+
+
+.questionstable table.questionstitles td {
+    text-align: center;
+    border: 1px solid #26262680;
+    background-color: #d1dfff;
+    font-weight: bold;
+}
+
+.headertable table{
+    display: grid;
+}
+
+.headertable thead, tbody, tr {
+  display: contents;
+}
+
+.headertable td, th {
+    border: 1px solid #26262680;
+
+}
+
+
+.addquestion {
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  background-color: #ddd;
+
+}
+
+
+
+.addquestiontable table{
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.addquestiontable table.questionstitles td {
+    text-align: center;
+    border: 1px solid #26262680;
+    background-color: #d1dfff;
+    font-weight: bold;
+}
+
+.questionstitles thead, tbody, tr {
+  display: contents; 
+    background: #f2f6f8;
+}
+
+.questionstitles td, th {
+    border: 1px solid #26262680;
+  font-size: 12px;
+padding: 5px
+}
+
+.questionstitles th{
+  box-sizing: border-box;
+  position: sticky;
+  z-index: 1;
+  top: -10;
+  /*background: #226688;*/
+  background: #226688;
+  padding: 10px;
+color: #f1f1f1
+}
+.scoretable table{
+    display: grid;
+    grid-template-columns: 6fr 5fr 9fr;
+    background-color: #d1dfff;
+}
+
+/*https://webformatter.com/html*/
+/*https://symbl.cc/en/1C1E/*/

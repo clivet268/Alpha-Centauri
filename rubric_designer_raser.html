@@ -1,0 +1,298 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- js stuff enforce selecting only rules and moving pairs to the assignment-->
+    <div class="container-base">
+
+      <!-- js stuff will provide the checks and functionality-->
+      <div class="control-bar">
+        <div>
+        <label for="rubricsSelect">Select Rubric:</label>
+
+        <select name="rubricsSelect" id="rubricsSelect">
+          <option value="">Select Rubric</option>
+          <option value="anotherRubric">Another Rubric</option>
+        </select>
+        </div>
+        <button class="create" id="create" command="show-modal" commandfor="myFormPopup">Create New Rubric</button>
+        <button class="dupe" id="dupe">Duplcate Current Rubric</button>
+        <button class="publish" id="publish">Publish Current Rubric</button>
+        <div style="text-align: center; font-size: 24px; justify-content: center;" id="tbd" contentEditable="true">
+                    Click To Edit Rubric Title
+                  </div>
+        <button class="deprecate" id="deprecate" style="justify-self: end; background-color: #d0df1e"id="delete">Deprecate Current Rubric</button>
+        <div>        </div>
+        <button class="delete" id="delete" style="justify-self: end; background-color: #d00f1e"id="delete">Delete Current Rubric</button>
+      </div>
+      <div class="questionscontainer">
+        <div class="headertable ">
+          <table class="">
+            <thead>
+              <tr>
+                <th style="text-align: left">https://sample-view-url.com</th>
+              </tr>
+
+              <tr></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="questionstable">
+            <table class="questionstitles">
+              <thead>
+                <tr>
+                  <th>
+                    Criterion
+                  </th>
+                  <th id="tbd" contentEditable="true">Max</th>
+                  <th>4</th>
+                  <th>3</th>
+                  <th>2</th>
+                  <th id="tbd" contentEditable="true">Min</th>
+                  <th>
+                    Score Guidance
+                  </th>
+                  <th>
+                    
+                  </th>
+                </tr>
+                <tr></tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td style="text-align: left; grid-column: span 8;">Description of the scoring system</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; grid-column: span 8;" id="tbd">Introduction</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left" id="tbd" contentEditable="true">Is key relevant literature cited?</td>
+                  <td style="background-color: #cfc; color: #2a3">5</td>
+                  <td style="background-color: #ffc; color: #680">4</td>
+                  <td style="background-color: #ffc; color: #993">3</td>
+                  <td style="background-color: #fcc; color: #862">2</td>
+                  <td style="background-color: #fcc; color: #a62">1</td>
+
+                  <td style="text-align: left" id="tbd" contentEditable="true">
+                    5 = all key prior references are cited; 4 = too many prior references but still relevant; 3 =
+                    references included but not all relevant; 2 = few references; 1 = no cited references
+                  </td>
+<td><button type="button" class="addquestion">ᰞ</button></td>
+                </tr>
+                <tr>
+                  <td style="text-align: left" id="tbd" contentEditable="true">Can you click to edit me?</td>
+                  <td style="background-color: #cfc; color: #2a3">5</td>
+                  <td style="background-color: #ffc; color: #680">4</td>
+                  <td style="background-color: #ffc; color: #993">3</td>
+                  <td style="background-color: #fcc; color: #862">2</td>
+                  <td style="background-color: #fcc; color: #a62">1</td>
+
+                  <td style="text-align: left" id="tbd" contentEditable="true">
+                    just click these to edit them
+                  </td>
+<td><button type="button" class="addquestion">ᰞ</button></td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; grid-column: span 8;" id="tbd">
+                    <button type="button" class="addquestion">Add Question</button>
+		   </td>
+                </tr>
+
+
+                <tr>
+                  <td style="text-align: left; grid-column: span 8;" id="tbd">Materials & Sourcing</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left" id="tbd" contentEditable="true">Is key relevant literature cited?</td>
+                  <td style="background-color: #cfc; color: #2a3">5</td>
+                  <td style="background-color: #ffc; color: #680">4</td>
+                  <td style="background-color: #ffc; color: #993">3</td>
+                  <td style="background-color: #fcc; color: #862">2</td>
+                  <td style="background-color: #fcc; color: #a62">1</td>
+
+                  <td style="text-align: left" id="tbd" contentEditable="true">
+                    5 = all key prior references are cited; 4 = too many prior references but still relevant; 3 =
+                    references included but not all relevant; 2 = few references; 1 = no cited references
+                  </td>
+<td><button type="button" class="addquestion">ᰞ</button></td>
+                </tr>
+                <tr>
+                  <td style="text-align: left" id="tbd" contentEditable="true">Can you click to edit me?</td>
+                  <td style="background-color: #cfc; color: #2a3">5</td>
+                  <td style="background-color: #ffc; color: #680">4</td>
+                  <td style="background-color: #ffc; color: #993">3</td>
+                  <td style="background-color: #fcc; color: #862">2</td>
+                  <td style="background-color: #fcc; color: #a62">1</td>
+
+                  <td style="text-align: left" id="tbd" contentEditable="true">
+                    just click these to edit them
+                  </td>
+<td><button type="button" class="addquestion">ᰞ</button></td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; grid-column: span 8;" id="tbd">
+                    <button type="button" class="addquestion">Add Question</button>
+		   </td>
+                </tr>
+
+
+
+                <tr>
+                  <td style="text-align: left; grid-column: span 8;" id="tbd">Methodology & Reproducibility</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left" id="tbd" contentEditable="true">Is key relevant literature cited?</td>
+                  <td style="background-color: #cfc; color: #2a3">5</td>
+                  <td style="background-color: #ffc; color: #680">4</td>
+                  <td style="background-color: #ffc; color: #993">3</td>
+                  <td style="background-color: #fcc; color: #862">2</td>
+                  <td style="background-color: #fcc; color: #a62">1</td>
+
+                  <td style="text-align: left" id="tbd" contentEditable="true">
+                    5 = all key prior references are cited; 4 = too many prior references but still relevant; 3 =
+                    references included but not all relevant; 2 = few references; 1 = no cited references
+                  </td>
+<td><button type="button" class="addquestion">ᰞ</button></td>
+                </tr>
+                <tr>
+                  <td style="text-align: left" id="tbd" contentEditable="true">Can you click to edit me?</td>
+                  <td style="background-color: #cfc; color: #2a3">5</td>
+                  <td style="background-color: #ffc; color: #680">4</td>
+                  <td style="background-color: #ffc; color: #993">3</td>
+                  <td style="background-color: #fcc; color: #862">2</td>
+                  <td style="background-color: #fcc; color: #a62">1</td>
+
+                  <td style="text-align: left" id="tbd" contentEditable="true">
+                    just click these to edit them
+                  </td>
+<td><button type="button" class="addquestion">ᰞ</button></td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; grid-column: span 8;" id="tbd">
+                    <button type="button" class="addquestion">Add Question</button>
+		   </td>
+                </tr>
+
+
+                <tr>
+                  <td style="text-align: left; grid-column: span 8;" id="tbd">Replication, Risk of Bias & Statistics</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left" id="tbd" contentEditable="true">Is key relevant literature cited?</td>
+                  <td style="background-color: #cfc; color: #2a3">5</td>
+                  <td style="background-color: #ffc; color: #680">4</td>
+                  <td style="background-color: #ffc; color: #993">3</td>
+                  <td style="background-color: #fcc; color: #862">2</td>
+                  <td style="background-color: #fcc; color: #a62">1</td>
+
+                  <td style="text-align: left" id="tbd" contentEditable="true">
+                    5 = all key prior references are cited; 4 = too many prior references but still relevant; 3 =
+                    references included but not all relevant; 2 = few references; 1 = no cited references
+                  </td>
+<td><button type="button" class="addquestion">ᰞ</button></td>
+                </tr>
+                <tr>
+                  <td style="text-align: left" id="tbd" contentEditable="true">Can you click to edit me?</td>
+                  <td style="background-color: #cfc; color: #2a3">5</td>
+                  <td style="background-color: #ffc; color: #680">4</td>
+                  <td style="background-color: #ffc; color: #993">3</td>
+                  <td style="background-color: #fcc; color: #862">2</td>
+                  <td style="background-color: #fcc; color: #a62">1</td>
+
+                  <td style="text-align: left" id="tbd" contentEditable="true">
+                    just click these to edit them
+                  </td>
+<td><button type="button" class="addquestion">ᰞ</button></td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; grid-column: span 8;" id="tbd">
+                    <button type="button" class="addquestion">Add Question</button>
+		   </td>
+                </tr>
+
+
+
+
+                <tr>
+                  <td style="text-align: left; grid-column: span 8;" id="tbd">Reporting & Transparency
+</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left" id="tbd" contentEditable="true">Is key relevant literature cited?</td>
+                  <td style="background-color: #cfc; color: #2a3">5</td>
+                  <td style="background-color: #ffc; color: #680">4</td>
+                  <td style="background-color: #ffc; color: #993">3</td>
+                  <td style="background-color: #fcc; color: #862">2</td>
+                  <td style="background-color: #fcc; color: #a62">1</td>
+
+                  <td style="text-align: left" id="tbd" contentEditable="true">
+                    5 = all key prior references are cited; 4 = too many prior references but still relevant; 3 =
+                    references included but not all relevant; 2 = few references; 1 = no cited references
+                  </td>
+<td><button type="button" class="addquestion">ᰞ</button></td>
+                </tr>
+                <tr>
+                  <td style="text-align: left" id="tbd" contentEditable="true">Can you click to edit me?</td>
+                  <td style="background-color: #cfc; color: #2a3">5</td>
+                  <td style="background-color: #ffc; color: #680">4</td>
+                  <td style="background-color: #ffc; color: #993">3</td>
+                  <td style="background-color: #fcc; color: #862">2</td>
+                  <td style="background-color: #fcc; color: #a62">1</td>
+
+                  <td style="text-align: left" id="tbd" contentEditable="true">
+                    just click these to edit them
+                  </td>
+<td><button type="button" class="addquestion">ᰞ</button></td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; grid-column: span 8;" id="tbd">
+                    <button type="button" class="addquestion">Add Question</button>
+		   </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="scoretable">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Maximum Possible Score
+                  </th>
+                  <th>
+                    70
+                  </th>
+                  <th>
+                    >= 55 = High Score  40 to 55 moderate < 40 = low
+                  </th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+        </div>
+    <div style="position: absolute; background: #d2d6f8;">
+<dialog id="myFormPopup" style="background: #d2d6f8; border-radius: 20px;">
+        <div style="font-weight: bold;">Create New Rubric</div>
+        
+        <form method="dialog">
+            <div class="form-group">
+                <label for="name">Rubric Name:</label>
+                <input type="text" id="name" required>
+            </div>
+
+
+            <div class="actions">
+                <!-- This button closes the form without submitting -->
+                <button type="button" class="cancel-btn" command="close" commandfor="myFormPopup">Cancel</button>
+                <!-- This button submits data (or closes it if no backend is attached) -->
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+        </form>
+    </dialog>
+    </div>
+    </div>
+  </body>
+</html>
