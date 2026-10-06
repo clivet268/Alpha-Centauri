@@ -222,8 +222,8 @@
   display:grid;
   grid-template-columns: 1fr 1fr;
   grid-row: auto auto;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
 }
 
 .dashspace > * {
