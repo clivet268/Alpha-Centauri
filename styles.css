@@ -1,65 +1,64 @@
 
+/* Rubric Designer Stuff */
+
 .container-base{
-    border: 1px solid #ccc;
-    border-radius: 8px; 
-    /*width: 1200px;*/
-    /*width: auto; maybe full better -268*/
-    width: auto;
-    height: auto;
-    display: grid;
-    background: #d2e6f8;
-    padding: 12px;
-    grid-template-rows: auto; 
+  border: 1px solid #ccc;
+  border-radius: 8px; 
+  /*width: 1200px;*/
+  /*width: auto; maybe full better -268*/
+  width: auto;
+  height: auto;
+  display: grid;
+  background: #d2e6f8;
+  padding: 12px;
+  grid-template-rows: auto; 
 }
 
 .questionscontainer{
-    border: 1px solid #ccc;
-    border-radius: 8px; 
-    background: #c2d6f8;
-    padding: 2px;
-    padding: 6px;
-    padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px; 
+  background: #c2d6f8;
+  padding: 2px;
+  padding: 6px;
+  padding: 8px;
 }
 
 .obj-box {
-    text-align: center;
-    padding: 5px;
-    margin-top: 1px;
-    margin-left: 5px;
-    margin-right: 5px;
-
+  text-align: center;
+  padding: 5px;
+  margin-top: 1px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 
 .control-bar {
-    display: grid;
-    background: #92b6f8;
-    padding: 10px;
-    gap: 10px;
-    grid-template-columns: 2fr 1fr 1fr 1fr 6fr 1fr 1fr 1fr; 
+  display: grid;
+  background: #92b6f8;
+  padding: 10px;
+  gap: 10px;
+  grid-template-columns: 2fr 1fr 1fr 1fr 6fr 1fr 1fr 1fr; 
 }
 
 .questionstable table{
-    display: grid;
-    grid-template-columns: 6fr 1fr 1fr 1fr 1fr 1fr 9fr 1fr;
-    background: #f2f6f8;
+  display: grid;
+  grid-template-columns: 6fr 1fr 1fr 1fr 1fr 1fr 9fr 1fr;
+  background: #f2f6f8;
 }
 
 .questionstable thead, tbody, tr {
-    display: contents;
-
+  display: contents;
 }
 
-
 .questionstable table.questionstitles td {
-    text-align: center;
-    border: 1px solid #26262680;
-    background-color: #d1dfff;
-    font-weight: bold;
+  text-align: center;
+  border: 1px solid #26262680;
+  background-color: #d1dfff;
+  font-weight: bold;
 }
 
 .headertable table{
-    display: grid;
+  display: grid;
 }
 
 .headertable thead, tbody, tr {
@@ -80,9 +79,6 @@
   background-color: #ddd;
 
 }
-
-
-
 .addquestiontable table{
     display: grid;
     grid-template-columns: 1fr;
@@ -120,6 +116,55 @@ color: #f1f1f1
     display: grid;
     grid-template-columns: 6fr 5fr 9fr;
     background-color: #d1dfff;
+}
+
+/* Editor Auth Stuff */
+
+.authcontainerbase{
+  border: 1px solid #ccc;
+  border-radius: 8px; 
+  width: fill;
+  height: fill;
+  display: flexbox;
+  background: #d2e6f8;
+  padding: 12px;
+  grid-template-rows: 1fr min-content; 
+}
+
+.authspace{
+  display: grid;
+  background: #f2f6f8;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  height: 100%;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.auth{
+  display: grid;
+  padding: 10px;
+  grid-template-columns: 2fr 2fr;
+  background: #d1d1f0;
+  border-radius: 10px;
+}
+
+.auth input{
+  font-size: 24px;
+}
+
+.auth input::placeholder{
+  color: #d1d1f0;
+}
+
+.title-bar {
+  background: #92b6f8;
+  padding: 10px;
+  text-align: center;
+  font-size: 24px;
+  justify-content: center;
+  border-radius: 5px;
 }
 
 /*https://webformatter.com/html*/

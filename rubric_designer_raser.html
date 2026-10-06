@@ -3,28 +3,25 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <!-- js stuff enforce selecting only rules and moving pairs to the assignment-->
     <div class="container-base">
-
-      <!-- js stuff will provide the checks and functionality-->
       <div class="control-bar">
         <div>
-        <label for="rubricsSelect">Select Rubric:</label>
+          <label for="rubricsSelect">Select Rubric:</label>
 
-        <select name="rubricsSelect" id="rubricsSelect">
-          <option value="">Select Rubric</option>
-          <option value="anotherRubric">Another Rubric</option>
-        </select>
+          <select name="rubricsSelect" id="rubricsSelect">
+            <option value="">Select Rubric</option>
+            <option value="anotherRubric">Another Rubric</option>
+          </select>
         </div>
         <button class="create" id="create" command="show-modal" commandfor="myFormPopup">Create New Rubric</button>
         <button class="dupe" id="dupe">Duplcate Current Rubric</button>
         <button class="publish" id="publish">Publish Current Rubric</button>
         <div style="text-align: center; font-size: 24px; justify-content: center;" id="tbd" contentEditable="true">
-                    Click To Edit Rubric Title
-                  </div>
+          Click To Edit Rubric Title
+        </div>
         <button class="deprecate" id="deprecate" style="justify-self: end; background-color: #d0df1e"id="delete">Deprecate Current Rubric</button>
         <div>        </div>
-        <button class="delete" id="delete" style="justify-self: end; background-color: #d00f1e"id="delete">Delete Current Rubric</button>
+        <button class="delete" id="delete" style="justify-self: end; background-color: #d00f1e" id="delete">Delete Current Rubric</button> <!-- TODO post rubricId -268 -->
       </div>
       <div class="questionscontainer">
         <div class="headertable ">
@@ -33,7 +30,6 @@
               <tr>
                 <th style="text-align: left">https://sample-view-url.com</th>
               </tr>
-
               <tr></tr>
             </thead>
             <tbody></tbody>
@@ -274,24 +270,21 @@
 
         </div>
     <div style="position: absolute; background: #d2d6f8;">
-<dialog id="myFormPopup" style="background: #d2d6f8; border-radius: 20px;">
+	<dialog id="myFormPopup" style="background: #d2d6f8; border-radius: 20px;">
         <div style="font-weight: bold;">Create New Rubric</div>
         
-        <form method="dialog">
-            <div class="form-group">
-                <label for="name">Rubric Name:</label>
-                <input type="text" id="name" required>
-            </div>
-
-
-            <div class="actions">
-                <!-- This button closes the form without submitting -->
-                <button type="button" class="cancel-btn" command="close" commandfor="myFormPopup">Cancel</button>
-                <!-- This button submits data (or closes it if no backend is attached) -->
-                <button type="submit" class="submit-btn">Submit</button>
-            </div>
-        </form>
-    </dialog>
+        <!-- TODO -268 -->
+        <form method="post">
+				<div class="">
+					<label for="name">Rubric Name:</label>
+					<input type="text" id="name" required>
+				</div>
+				<div class="actions">
+					<button type="button" class="cancel-btn" command="close" commandfor="myFormPopup">Cancel</button>
+					<button type="submit" class="submit-btn">Submit</button>
+				</div>
+			</form>
+		</dialog>
     </div>
     </div>
   </body>
