@@ -4,8 +4,11 @@
   </head>
   <body>
     <div class="container-base">
-      <div class="control-bar">
+        
+        <form class="control-bar" method="post">
         <div>
+          <!-- I want the rubric select to be a popup dialogue what you can scroll through, -->
+          <!-- we CAN feed the list here and make it have a next x rubrics BUT its way more friendly with its own window -268 -->
           <label for="rubricsSelect">Select Rubric:</label>
 
           <select name="rubricsSelect" id="rubricsSelect">
@@ -13,16 +16,18 @@
             <option value="anotherRubric">Another Rubric</option>
           </select>
         </div>
-        <button class="create" id="create" command="show-modal" commandfor="myFormPopup">Create New Rubric</button>
-        <button class="dupe" id="dupe">Duplcate Current Rubric</button>
-        <button class="publish" id="publish">Publish Current Rubric</button>
-        <div style="text-align: center; font-size: 24px; justify-content: center;" id="tbd" contentEditable="true">
-          Click To Edit Rubric Title
-        </div>
-        <button class="deprecate" id="deprecate" style="justify-self: end; background-color: #d0df1e"id="delete">Deprecate Current Rubric</button>
-        <div>        </div>
-        <button class="delete" id="delete" style="justify-self: end; background-color: #d00f1e" id="delete">Delete Current Rubric</button> <!-- TODO post rubricId -268 -->
-      </div>
+          <button class="create" id="create" command="show-modal" commandfor="myFormPopup">Create New Rubric</button>
+          <button class="dupe" id="dupe">Duplcate Current Rubric</button>
+          <button class="publish" id="publish">Publish Current Rubric</button>
+          <div style="text-align: center; font-size: 24px; justify-content: center;" id="tbd" contentEditable="true">
+            Click To Edit Rubric Title
+          </div>
+            <!-- auth on important actions? if im reading the payloads right -268 -->
+          <button class="deprecate" id="deprecate" style="justify-self: end; background-color: #d0df1e"id="delete">Deprecate Current Rubric</button>
+          <div>        </div>
+            <!-- auth on important actions? if im reading the payloads right -268 -->
+          <button class="delete" id="delete" style="justify-self: end; background-color: #d00f1e" id="delete">Delete Current Rubric</button> <!-- TODO post rubricId -268 -->
+        </form>
       <div class="questionscontainer">
         <div class="headertable ">
           <table class="">

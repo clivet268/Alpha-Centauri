@@ -37,7 +37,7 @@
   background: #92b6f8;
   padding: 10px;
   gap: 10px;
-  grid-template-columns: 2fr 1fr 1fr 1fr 6fr 1fr 1fr 1fr; 
+  grid-template-columns: 1fr 1fr 1fr 1fr 5fr 1fr 1fr 1fr 1fr; 
 }
 
 .questionstable table{
@@ -85,15 +85,15 @@
 }
 
 .addquestiontable table.questionstitles td {
-    text-align: center;
-    border: 1px solid #26262680;
-    background-color: #d1dfff;
-    font-weight: bold;
+  text-align: center;
+  border: 1px solid #26262680;
+  background-color: #d1dfff;
+  font-weight: bold;
 }
 
 .questionstitles thead, tbody, tr {
   display: contents; 
-    background: #f2f6f8;
+  background: #f2f6f8;
 }
 
 .questionstitles td, th {

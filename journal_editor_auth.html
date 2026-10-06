@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="authcontainerbase">
+      <div class="">
+        <div class="title-bar">
+          Rubric Designer Auth
+        </div>
+      </div>
+      <div class="authspace">
+        <div class="auth">
+          <div style="width: 400px; height: 300px; background-color: #d1d1f0; margin: 10px; align-content: center; justify-content: center; font-size: 24px;">
+            <form method="post">
+              <div style="display:flex; flex-direction: column; justify-content: center; align-items: center; font-size: 24px;">
+                <label for="email">Register</label>
+                <div>
+                  <input type="text" id="journalName" placeholder="Enter Journal Name" required>
+                </div>
+                <div>
+                  <input type="text" id="rubricId" placeholder="Enter Rubric ID" required>
+                </div>
+                <div>
+                  <input type="email" id="email" placeholder="Enter Email" required>
+                </div>
+                  <!-- https://stackoverflow.com/questions/34952392/simple-way-to-hash-password-client-side-right-before-submitting-form -->
+                  <!-- https://stackoverflow.com/a/64385671 -->
+                  <!-- its probably fine for this project/might even be best practice -268 -->
+                <div>
+                  <input type="password" id="password" placeholder="Enter Password" required>
+                </div>
+                <div class="actions">
+                  <button type="submit" class="submit-btn">Authenticate</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div style="width: 400px; height: 300px; background-color: #d1d1f0; margin: 10px; align-content: center; justify-content: center; font-size: 24px;";>
+            <form method="post">
+              <div style="display:flex; flex-direction: column; justify-content: center; align-items: center">
+                <label for="email">Login</label>
+                <div>
+                  <input type="email" id="email" placeholder="Enter Email" required>
+                </div>
+                  <!-- https://stackoverflow.com/questions/34952392/simple-way-to-hash-password-client-side-right-before-submitting-form -->
+                  <!-- https://stackoverflow.com/a/64385671 -->
+                  <!-- its probably fine for this project/might even be best practice -268 -->
+                <div>
+                  <input type="password" id="password" placeholder="Enter Password" required>
+                </div>
+                <div class="actions">
+                  <button type="submit" class="submit-btn">Authenticate</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
