@@ -23,6 +23,61 @@
   padding: 8px;
 }
 
+.rubriclist{
+  width: 800px;
+  border: 1px solid #ccc;
+}
+
+
+.rubriclist table{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  background: #f2f6f8;
+}
+
+.rubriclist thead, tbody, tr {
+  display: block;
+}
+
+.assignmentList{
+  width: 800px;
+  border: 1px solid #ccc;
+}
+
+.assignmentList table{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  background: #f2f6f8;
+}
+
+.assignmentList thead, tbody, tr {
+  display: block;
+}
+
+.issuelist{
+  width: 800px;
+  border: 1px solid #ccc;
+}
+
+.issuelist table{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: #f2f6f8;
+}
+
+.issuelist thead, tbody, tr {
+  display: block;
+}
+.testcontainer{
+  border: 1px solid #ccc;
+  border-radius: 8px; 
+  background: #c2d6f8;
+  padding: 2px;
+  padding: 6px;
+  padding: 8px;
+  padding: 8px;
+}
+
 .obj-box {
   text-align: center;
   padding: 5px;
@@ -42,7 +97,8 @@
 
 .questionstable table{
   display: grid;
-  grid-template-columns: 6fr 1fr 1fr 1fr 1fr 1fr 9fr 1fr;
+  /* bruh */
+  grid-template-columns: 6fr 1fr 1fr 1fr 1fr 1fr 16fr minmax(30px, 1fr);
   background: #f2f6f8;
 }
 
@@ -51,6 +107,25 @@
 }
 
 .questionstable table.questionstitles td {
+  text-align: center;
+  border: 1px solid #26262680;
+  background-color: #d1dfff;
+  font-weight: bold;
+}
+
+
+.test table{
+  display: grid;
+  /* bruh */
+  grid-template-columns: 6fr 1fr 1fr 1fr 1fr 1fr 16fr;
+  background: #f2f6f8;
+}
+
+.test thead, tbody, tr {
+  display: contents;
+}
+
+.test table.questionstitles td {
   text-align: center;
   border: 1px solid #26262680;
   background-color: #d1dfff;
@@ -97,9 +172,9 @@
 }
 
 .questionstitles td, th {
-    border: 1px solid #26262680;
+  border: 1px solid #26262680;
   font-size: 12px;
-padding: 5px
+  padding: 5px
 }
 
 .questionstitles th{
@@ -110,12 +185,12 @@ padding: 5px
   /*background: #226688;*/
   background: #226688;
   padding: 10px;
-color: #f1f1f1
+  color: #f1f1f1
 }
 .scoretable table{
-    display: grid;
-    grid-template-columns: 6fr 5fr 9fr;
-    background-color: #d1dfff;
+  display: grid;
+  grid-template-columns: 6fr 5fr 9fr;
+  background-color: #d1dfff;
 }
 
 /* Editor Auth Stuff */
@@ -125,7 +200,6 @@ color: #f1f1f1
   border-radius: 8px; 
   width: fill;
   height: fill;
-  display: flexbox;
   background: #d2e6f8;
   padding: 12px;
   grid-template-rows: 1fr min-content; 
@@ -134,20 +208,41 @@ color: #f1f1f1
 .authspace{
   display: grid;
   background: #f2f6f8;
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
-  height: 100%;
+  height: 87%;
   padding: 10px;
   border-radius: 5px;
+}
+
+.dashspace{
+  padding: 10px;
+  border-radius: 5px;
+  width:fill;
+  height: 87%;
+  background: #f2f6f8;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row: auto auto;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+
+.dashspace > * {
+  overflow-y: scroll;
 }
 
 .auth{
   display: grid;
   padding: 10px;
-  grid-template-columns: 2fr 2fr;
   background: #d1d1f0;
   border-radius: 10px;
+  grid-template-columns: auto auto; 
+  justify-content: center;
+  align-content: center;
+}
+
+.auth > * {
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .auth input{

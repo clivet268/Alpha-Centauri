@@ -5,12 +5,414 @@
   <body>
     <div class="authcontainerbase">
       <div class="">
-        <div class="title-bar">
-          Journal Editor Dashboard
+        <div class="title-bar" style="display: grid; grid-template-columns: 1fr 1fr 6fr 2fr;">
+        <div id="journalId"> Journal Name </div>
+        <div id="name"> Journal ID </div>
+        <div>Journal Editor Dashboard</div>
+        <!-- auth on important actions? if im reading the payloads right -268 -->
+        <!-- TODO post journalId -268 -->
+        <button class="delete" id="delete" style="justify-self: end; background-color: #d00f1e">Unregister Current Journal</button> 
         </div>
       </div>
-      <div class="authspace">
-      
+       <!-- <div id="journal" > -->
+         <!-- <div id="journalId"> Journal Name </div> -->
+         <!-- <div id="name"> Journal ID </div> -->
+        <!-- auth on important actions? if im reading the payloads right -268 -->
+        <!-- TODO post journalId -268 -->
+         <!-- <button class="delete" id="delete" style="justify-self: end; background-color: #d00f1e">Unregister Current Journal</button>  -->
+       <!-- </div> -->
+      <div class="dashspace">
+        <div style="display: grid; justify-content: top; align-text: center; align-content: start;">
+        <div style="text-align: center;">List of Rubrics in Journal</div>
+        <div class="rubriclist" id="rubrics">
+          <table class="questionstitles">
+            <thead>
+              <th>Rubric ID</th>
+              <th>Name</th>
+              <th>State</th>
+              <th>ReplacementId</th>
+              <th>Publishdate</th>
+            </thead>
+            <tbody>    
+              <tr>
+                <td><div id="rubricId">click me to display my rubric</div></td>
+                <td><div id="name">click me to display my rubric</div></td>
+                <td><div id="state">click me to display my rubric</div></td>
+                <td><div id="replacementRubricId">click me to display my rubric</div></td>
+                <td><div id="publishDate">click me to display my rubric</div></td>
+              </tr>    
+              <tr>
+                <td><div id="rubricId">rb_8c1e</div></td>
+                <td><div id="name">Sample rubric</div></td>
+                <td><div id="state">Deprecated</div></td>
+                <td><div id="replacementRubricId">rb_93d2</div></td>
+                <td><div id="publishDate">2026-09-30</div></td>
+              </tr>     
+              <tr>
+                <td><div id="rubricId">rb_8c1e</div></td>
+                <td><div id="name">Sample rubric</div></td>
+                <td><div id="state">Deprecated</div></td>
+                <td><div id="replacementRubricId">rb_93d2</div></td>
+                <td><div id="publishDate">2026-09-30</div></td>
+              </tr>     
+              <tr>
+                <td><div id="rubricId">rb_8c1e</div></td>
+                <td><div id="name">Sample rubric</div></td>
+                <td><div id="state">Deprecated</div></td>
+                <td><div id="replacementRubricId">rb_93d2</div></td>
+                <td><div id="publishDate">2026-09-30</div></td>
+              </tr>     
+              <tr>
+                <td><div id="rubricId">rb_8c1e</div></td>
+                <td><div id="name">Sample rubric</div></td>
+                <td><div id="state">Deprecated</div></td>
+                <td><div id="replacementRubricId">rb_93d2</div></td>
+                <td><div id="publishDate">2026-09-30</div></td>
+              </tr>     
+              <tr>
+                <td><div id="rubricId">rb_8c1e</div></td>
+                <td><div id="name">Sample rubric</div></td>
+                <td><div id="state">Deprecated</div></td>
+                <td><div id="replacementRubricId">rb_93d2</div></td>
+                <td><div id="publishDate">2026-09-30</div></td>
+              </tr>     
+              <tr>
+                <td><div id="rubricId">rb_8c1e</div></td>
+                <td><div id="name">Sample rubric</div></td>
+                <td><div id="state">Deprecated</div></td>
+                <td><div id="replacementRubricId">rb_93d2</div></td>
+                <td><div id="publishDate">2026-09-30</div></td>
+              </tr>     
+              <tr>
+                <td><div id="rubricId">rb_8c1e</div></td>
+                <td><div id="name">Sample rubric</div></td>
+                <td><div id="state">Deprecated</div></td>
+                <td><div id="replacementRubricId">rb_93d2</div></td>
+                <td><div id="publishDate">2026-09-30</div></td>
+              </tr>     
+              <tr>
+                <td><div id="rubricId">rb_8c1e</div></td>
+                <td><div id="name">Sample rubric</div></td>
+                <td><div id="state">Deprecated</div></td>
+                <td><div id="replacementRubricId">rb_93d2</div></td>
+                <td><div id="publishDate">2026-09-30</div></td>
+              </tr>     
+              <tr>
+                <td><div id="rubricId">rb_8c1e</div></td>
+                <td><div id="name">Sample rubric</div></td>
+                <td><div id="state">Deprecated</div></td>
+                <td><div id="replacementRubricId">rb_93d2</div></td>
+                <td><div id="publishDate">2026-09-30</div></td>
+              </tr> 
+            </tbody>
+          </table>
+        </div>
+        <div style="text-align: center;">Page 1 of x < [10 of y]  ></div>
+        </div>
+        
+        <div style="display: grid; justify-content: top; align-text: center; align-content: start;">
+        <div style="text-align: center;">List of Issues in Journal</div>
+        <div class="issuelist" id="issues">
+          <table class="questionstitles">
+            <thead>
+              <th>Rubric ID</th>
+              <th>Name</th>
+              <th>State</th>
+            </thead>
+            <tbody>    
+              <tr>
+                <td><div id="issueId">click me to display my issue</div></td>
+                <td><div id="volume">click me to display my issue</div></td>
+                <td><div id="number">click me to display my issue</div></td>
+              </tr>    
+              <tr>
+                <td><div id="issueId">is_0a11</div></td>
+                <td><div id="volume">12</div></td>
+                <td><div id="number">3</div></td>
+              </tr>    
+            </tbody>
+          </table>
+        </div>
+        <div style="text-align: center;">Page 1 of x < [10 of y]  ></div>
+        </div>
+                  <div id="displayedRubric" style="overflow-y: scroll;">
+                    <div class="testcontainer">
+                      <div class="headertable ">
+                        <table class="">
+                          <thead>
+                            <tr>
+                              <th style="text-align: left">https://sample-view-url.com</th>
+                            </tr>
+                            <tr></tr>
+                          </thead>
+                          <tbody></tbody>
+                        </table>
+                        <div class="test">
+                          <table class="questionstitles">
+                            <thead>
+                              <tr>
+                                <th>
+                                  Criterion
+                                </th>
+                                <th id="tbd" contentEditable="true">Max</th>
+                                <th>4</th>
+                                <th>3</th>
+                                <th>2</th>
+                                <th id="tbd" contentEditable="true">Min</th>
+                                <th>
+                                  Score Guidance
+                                </th>
+                              </tr>
+                            </thead>
+              
+                            <tbody>
+                              <tr>
+                                <td style="text-align: left; grid-column: span 7;">Description of the scoring system</td>
+                              </tr>
+                              <tr>
+                                <td style="text-align: left; grid-column: span 7;" id="tbd">Introduction</td>
+                              </tr>
+                              <tr>
+                                <td style="text-align: left" id="tbd" contentEditable="true">Is key relevant literature cited?</td>
+                                <td style="background-color: #cfc; color: #2a3">5</td>
+                                <td style="background-color: #ffc; color: #680">4</td>
+                                <td style="background-color: #ffc; color: #993">3</td>
+                                <td style="background-color: #fcc; color: #862">2</td>
+                                <td style="background-color: #fcc; color: #a62">1</td>
+              
+                                <td style="text-align: left" id="tbd" contentEditable="true">
+                                  5 = all key prior references are cited; 4 = too many prior references but still relevant; 3 =
+                                  references included but not all relevant; 2 = few references; 1 = no cited references
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="text-align: left" id="tbd" contentEditable="true">Can you click to edit me?</td>
+                                <td style="background-color: #cfc; color: #2a3">5</td>
+                                <td style="background-color: #ffc; color: #680">4</td>
+                                <td style="background-color: #ffc; color: #993">3</td>
+                                <td style="background-color: #fcc; color: #862">2</td>
+                                <td style="background-color: #fcc; color: #a62">1</td>
+              
+                                <td style="text-align: left" id="tbd" contentEditable="true">
+                                  just click these to edit them
+                                </td>
+                              </tr>
+              
+              
+                              <!-- Materials & Sourcing -->
+                              <tr>
+                                <td style="text-align: left; grid-column: span 7;" id="tbd">Materials & Sourcing</td>
+                              </tr>
+                              <tr>
+                                <td style="text-align: left" id="tbd" contentEditable="true">Is key relevant literature cited?</td>
+                                <td style="background-color: #cfc; color: #2a3">5</td>
+                                <td style="background-color: #ffc; color: #680">4</td>
+                                <td style="background-color: #ffc; color: #993">3</td>
+                                <td style="background-color: #fcc; color: #862">2</td>
+                                <td style="background-color: #fcc; color: #a62">1</td>
+              
+                                <td style="text-align: left" id="tbd" contentEditable="true">
+                                  5 = all key prior references are cited; 4 = too many prior references but still relevant; 3 =
+                                  references included but not all relevant; 2 = few references; 1 = no cited references
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="text-align: left" id="tbd" contentEditable="true">Can you click to edit me?</td>
+                                <td style="background-color: #cfc; color: #2a3">5</td>
+                                <td style="background-color: #ffc; color: #680">4</td>
+                                <td style="background-color: #ffc; color: #993">3</td>
+                                <td style="background-color: #fcc; color: #862">2</td>
+                                <td style="background-color: #fcc; color: #a62">1</td>
+              
+                                <td style="text-align: left" id="tbd" contentEditable="true">
+                                  just click these to edit them
+                                </td>
+                              </tr>
+                              
+                              <!-- Methodology & Reproducibility -->
+                              <tr>
+                                <td style="text-align: left; grid-column: span 7;" id="tbd">Methodology & Reproducibility</td>
+                              </tr>
+                              <tr>
+                                <td style="text-align: left" id="tbd" contentEditable="true">Is key relevant literature cited?</td>
+                                <td style="background-color: #cfc; color: #2a3">5</td>
+                                <td style="background-color: #ffc; color: #680">4</td>
+                                <td style="background-color: #ffc; color: #993">3</td>
+                                <td style="background-color: #fcc; color: #862">2</td>
+                                <td style="background-color: #fcc; color: #a62">1</td>
+              
+                                <td style="text-align: left" id="tbd" contentEditable="true">
+                                  5 = all key prior references are cited; 4 = too many prior references but still relevant; 3 =
+                                  references included but not all relevant; 2 = few references; 1 = no cited references
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="text-align: left" id="tbd" contentEditable="true">Can you click to edit me?</td>
+                                <td style="background-color: #cfc; color: #2a3">5</td>
+                                <td style="background-color: #ffc; color: #680">4</td>
+                                <td style="background-color: #ffc; color: #993">3</td>
+                                <td style="background-color: #fcc; color: #862">2</td>
+                                <td style="background-color: #fcc; color: #a62">1</td>
+              
+                                <td style="text-align: left" id="tbd" contentEditable="true">
+                                  just click these to edit them
+                                </td>
+                              </tr>
+                              <!-- Replication, Risk of Bias & Statistics -->
+                              <tr>
+                                <td style="text-align: left; grid-column: span 7;" id="tbd">Replication, Risk of Bias & Statistics</td>
+                              </tr>
+                              <tr>
+                                <td style="text-align: left" id="tbd" contentEditable="true">Is key relevant literature cited?</td>
+                                <td style="background-color: #cfc; color: #2a3">5</td>
+                                <td style="background-color: #ffc; color: #680">4</td>
+                                <td style="background-color: #ffc; color: #993">3</td>
+                                <td style="background-color: #fcc; color: #862">2</td>
+                                <td style="background-color: #fcc; color: #a62">1</td>
+              
+                                <td style="text-align: left" id="tbd" contentEditable="true">
+                                  5 = all key prior references are cited; 4 = too many prior references but still relevant; 3 =
+                                  references included but not all relevant; 2 = few references; 1 = no cited references
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="text-align: left" id="tbd" contentEditable="true">Can you click to edit me?</td>
+                                <td style="background-color: #cfc; color: #2a3">5</td>
+                                <td style="background-color: #ffc; color: #680">4</td>
+                                <td style="background-color: #ffc; color: #993">3</td>
+                                <td style="background-color: #fcc; color: #862">2</td>
+                                <td style="background-color: #fcc; color: #a62">1</td>
+              
+                                <td style="text-align: left" id="tbd" contentEditable="true">
+                                  just click these to edit them
+                                </td>
+                              </tr>
+                              <!-- Reporting & Transparency -->
+                              <tr>
+                                <td style="text-align: left; grid-column: span 7;" id="tbd">
+                                  Reporting & Transparency
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="text-align: left" id="tbd" contentEditable="true">Is key relevant literature cited?</td>
+                                <td style="background-color: #cfc; color: #2a3">5</td>
+                                <td style="background-color: #ffc; color: #680">4</td>
+                                <td style="background-color: #ffc; color: #993">3</td>
+                                <td style="background-color: #fcc; color: #862">2</td>
+                                <td style="background-color: #fcc; color: #a62">1</td>
+              
+                                <td style="text-align: left" id="tbd" contentEditable="true">
+                                  5 = all key prior references are cited; 4 = too many prior references but still relevant; 3 =
+                                  references included but not all relevant; 2 = few references; 1 = no cited references
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="text-align: left" id="tbd" contentEditable="true">Can you click to edit me?</td>
+                                <td style="background-color: #cfc; color: #2a3">5</td>
+                                <td style="background-color: #ffc; color: #680">4</td>
+                                <td style="background-color: #ffc; color: #993">3</td>
+                                <td style="background-color: #fcc; color: #862">2</td>
+                                <td style="background-color: #fcc; color: #a62">1</td>
+              
+                                <td style="text-align: left" id="tbd" contentEditable="true">
+                                  just click these to edit them
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="scoretable">
+                          <table>
+                            <thead>
+                              <tr>
+                                <th>
+                                  Maximum Possible Score
+                                </th>
+                                <th>
+                                  70
+                                </th>
+                                <th>
+                                  >= 55 = High Score  40 to 55 moderate < 40 = low
+                                </th>
+                              </tr>
+                            </thead>
+                          </table>
+                        </div>
+                        </div>
+              
+                      </div>
+        </div>
+        
+        <div style="display: grid; justify-content: top; align-text: center; align-content: start;">
+        <div style="text-align: center;">List of Papers in Issue</div>
+        <div class="assignmentList" id="assignments">
+          <table class="questionstitles">
+            <thead>
+              <th style="text-align: left; grid-column: span 4;">Rubric ID</th>
+              <th style="text-align: left; grid-column: span 4;">Name</th>
+              <th style="text-align: left; grid-column: span 4;">State</th>
+              <th style="text-align: left; grid-column: span 3;">Assignment ID</th>
+              <th style="text-align: left; grid-column: span 3;">Reviewer Email</th>
+              <th style="text-align: left; grid-column: span 3;">Deadline</th>
+              <th style="text-align: left; grid-column: span 3;">Status</th>
+            </thead>
+            <tbody>    
+              <tr>
+                <td style="text-align: left; grid-column: span 4;" id="tbd">pp_7c90</td>
+                <td style="text-align: left; grid-column: span 4;" id="tbd">Sample paper title</td>
+                <td style="text-align: left; grid-column: span 4;" id="tbd">https://doi.org/doi</td>
+              </tr>    
+              <tr>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">as_e1d3</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">rev1@uni.edu</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">2026-11-01</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">Completed</td>
+              </tr>    
+              <tr>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">as_e1d4</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">rev2@uni.edu</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">2026-11-01</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">InProgress</td>
+              </tr>   
+              <tr>
+                <td style="text-align: left; grid-column: span 4;" id="tbd">pp_7c90</td>
+                <td style="text-align: left; grid-column: span 4;" id="tbd">Sample paper title</td>
+                <td style="text-align: left; grid-column: span 4;" id="tbd">https://doi.org/doi</td>
+              </tr>    
+              <tr>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">as_e1d3</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">rev1@uni.edu</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">2026-11-01</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">Completed</td>
+              </tr>    
+              <tr>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">as_e1d4</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">rev2@uni.edu</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">2026-11-01</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">InProgress</td>
+              </tr>    
+              <tr>
+                <td style="text-align: left; grid-column: span 4;" id="tbd">pp_7c90</td>
+                <td style="text-align: left; grid-column: span 4;" id="tbd">Sample paper title</td>
+                <td style="text-align: left; grid-column: span 4;" id="tbd">https://doi.org/doi</td>
+              </tr>    
+              <tr>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">as_e1d3</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">rev1@uni.edu</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">2026-11-01</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">Completed</td>
+              </tr>    
+              <tr>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">as_e1d4</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">rev2@uni.edu</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">2026-11-01</td>
+                <td style="text-align: left; grid-column: span 3;" id="tbd">InProgress</td>
+              </tr>     
+            </tbody>
+          </table>
+        </div>
+        <div style="text-align: center;">Page 1 of x < [10 of y]  ></div>
+        </div>
       </div>
     </div>
   </body>
