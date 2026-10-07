@@ -353,3 +353,24 @@ button.danger {
   padding: 4px;
   color: #226688;
 }
+
+.commentcell {
+  text-align: left;
+  grid-column: span 8;
+  background: #f2f6f8;
+}
+
+.commentcell textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 48px;
+  font-size: 12px;
+}
+
+.commenttext {
+  background: #fff;
+  border: 1px solid #26262680;
+  border-radius: 3px;
+  padding: 5px;
+  font-size: 12px;
+}

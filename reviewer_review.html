@@ -11,8 +11,8 @@
         <div>Deadline: 2026-11-01</div>
       </div>
     </div>
-    <div class="container-base">
-      <div class="status-line" id="saveStatus">Your answers are saved per question. Last update: question 7 saved.</div>
+    <form id="reviewForm" method="post" class="container-base">
+      <div class="status-line" id="saveStatus">Every question needs a score and a comment before you can complete. Answers are saved per question. Last update: question 7 saved.</div>
       <div class="questionscontainer">
         <div class="headertable ">
           <table class="">
@@ -53,6 +53,12 @@
                   <td><button type="button" class="addquestion" title="Save my answer for this question">Update Answer</button></td>
                 </tr>
                 <tr>
+                  <td class="commentcell">
+                    <label for="c1">Comment on this question (required):</label>
+                    <textarea id="c1" name="c1" required placeholder="Explain your score">Cites the main prior work; a few recent papers are missing.</textarea>
+                  </td>
+                </tr>
+                <tr>
                   <td style="text-align: left">Can you click to edit me?</td>
                   <td style="background-color: #cfc; color: #2a3"><label class="answercell">5<input type="radio" name="q2" value="5"></label></td>
                   <td style="background-color: #ffc; color: #680"><label class="answercell">4<input type="radio" name="q2" value="4" checked></label></td>
@@ -61,6 +67,12 @@
                   <td style="background-color: #fcc; color: #a62"><label class="answercell">1<input type="radio" name="q2" value="1"></label></td>
                   <td style="text-align: left">just click these to edit them</td>
                   <td><button type="button" class="addquestion" title="Save my answer for this question">Update Answer</button></td>
+                </tr>
+                <tr>
+                  <td class="commentcell">
+                    <label for="c2">Comment on this question (required):</label>
+                    <textarea id="c2" name="c2" required placeholder="Explain your score">Criterion clearly met.</textarea>
+                  </td>
                 </tr>
                 <tr>
                   <td style="text-align: left; grid-column: span 8;">Materials &amp; Sourcing</td>
@@ -76,6 +88,12 @@
                   <td><button type="button" class="addquestion" title="Save my answer for this question">Update Answer</button></td>
                 </tr>
                 <tr>
+                  <td class="commentcell">
+                    <label for="c3">Comment on this question (required):</label>
+                    <textarea id="c3" name="c3" required placeholder="Explain your score">Sources are well documented.</textarea>
+                  </td>
+                </tr>
+                <tr>
                   <td style="text-align: left">Can you click to edit me?</td>
                   <td style="background-color: #cfc; color: #2a3"><label class="answercell">5<input type="radio" name="q4" value="5" checked></label></td>
                   <td style="background-color: #ffc; color: #680"><label class="answercell">4<input type="radio" name="q4" value="4"></label></td>
@@ -84,6 +102,12 @@
                   <td style="background-color: #fcc; color: #a62"><label class="answercell">1<input type="radio" name="q4" value="1"></label></td>
                   <td style="text-align: left">just click these to edit them</td>
                   <td><button type="button" class="addquestion" title="Save my answer for this question">Update Answer</button></td>
+                </tr>
+                <tr>
+                  <td class="commentcell">
+                    <label for="c4">Comment on this question (required):</label>
+                    <textarea id="c4" name="c4" required placeholder="Explain your score">Supplier details are complete.</textarea>
+                  </td>
                 </tr>
                 <tr>
                   <td style="text-align: left; grid-column: span 8;">Methodology &amp; Reproducibility</td>
@@ -99,6 +123,12 @@
                   <td><button type="button" class="addquestion" title="Save my answer for this question">Update Answer</button></td>
                 </tr>
                 <tr>
+                  <td class="commentcell">
+                    <label for="c5">Comment on this question (required):</label>
+                    <textarea id="c5" name="c5" required placeholder="Explain your score"></textarea>
+                  </td>
+                </tr>
+                <tr>
                   <td style="text-align: left">Can you click to edit me?</td>
                   <td style="background-color: #cfc; color: #2a3"><label class="answercell">5<input type="radio" name="q6" value="5"></label></td>
                   <td style="background-color: #ffc; color: #680"><label class="answercell">4<input type="radio" name="q6" value="4" checked></label></td>
@@ -107,6 +137,12 @@
                   <td style="background-color: #fcc; color: #a62"><label class="answercell">1<input type="radio" name="q6" value="1"></label></td>
                   <td style="text-align: left">just click these to edit them</td>
                   <td><button type="button" class="addquestion" title="Save my answer for this question">Update Answer</button></td>
+                </tr>
+                <tr>
+                  <td class="commentcell">
+                    <label for="c6">Comment on this question (required):</label>
+                    <textarea id="c6" name="c6" required placeholder="Explain your score"></textarea>
+                  </td>
                 </tr>
                 <tr>
                   <td style="text-align: left; grid-column: span 8;">Replication, Risk of Bias &amp; Statistics</td>
@@ -122,6 +158,12 @@
                   <td><button type="button" class="addquestion" title="Save my answer for this question">Update Answer</button></td>
                 </tr>
                 <tr>
+                  <td class="commentcell">
+                    <label for="c7">Comment on this question (required):</label>
+                    <textarea id="c7" name="c7" required placeholder="Explain your score"></textarea>
+                  </td>
+                </tr>
+                <tr>
                   <td style="text-align: left">Can you click to edit me?</td>
                   <td style="background-color: #cfc; color: #2a3"><label class="answercell">5<input type="radio" name="q8" value="5"></label></td>
                   <td style="background-color: #ffc; color: #680"><label class="answercell">4<input type="radio" name="q8" value="4"></label></td>
@@ -130,6 +172,12 @@
                   <td style="background-color: #fcc; color: #a62"><label class="answercell">1<input type="radio" name="q8" value="1"></label></td>
                   <td style="text-align: left">just click these to edit them</td>
                   <td><button type="button" class="addquestion" title="Save my answer for this question">Update Answer</button></td>
+                </tr>
+                <tr>
+                  <td class="commentcell">
+                    <label for="c8">Comment on this question (required):</label>
+                    <textarea id="c8" name="c8" required placeholder="Explain your score"></textarea>
+                  </td>
                 </tr>
                 <tr>
                   <td style="text-align: left; grid-column: span 8;">Reporting &amp; Transparency</td>
@@ -145,6 +193,12 @@
                   <td><button type="button" class="addquestion" title="Save my answer for this question">Update Answer</button></td>
                 </tr>
                 <tr>
+                  <td class="commentcell">
+                    <label for="c9">Comment on this question (required):</label>
+                    <textarea id="c9" name="c9" required placeholder="Explain your score"></textarea>
+                  </td>
+                </tr>
+                <tr>
                   <td style="text-align: left">Can you click to edit me?</td>
                   <td style="background-color: #cfc; color: #2a3"><label class="answercell">5<input type="radio" name="q10" value="5"></label></td>
                   <td style="background-color: #ffc; color: #680"><label class="answercell">4<input type="radio" name="q10" value="4"></label></td>
@@ -153,6 +207,12 @@
                   <td style="background-color: #fcc; color: #a62"><label class="answercell">1<input type="radio" name="q10" value="1" checked></label></td>
                   <td style="text-align: left">just click these to edit them</td>
                   <td><button type="button" class="addquestion" title="Save my answer for this question">Update Answer</button></td>
+                </tr>
+                <tr>
+                  <td class="commentcell">
+                    <label for="c10">Comment on this question (required):</label>
+                    <textarea id="c10" name="c10" required placeholder="Explain your score"></textarea>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -174,14 +234,14 @@
         <div class="status-line">Status: InProgress</div>
         <button type="button" class="publish" id="complete" command="show-modal" commandfor="completePopup" style="justify-self: end;">Complete Review</button>
       </div>
-    </div>
+    </form>
     <dialog id="completePopup" class="popup">
       <div style="font-weight: bold;">Complete Review</div>
-      <p>Once completed you cannot change your answers.<br>Submit review for "Sample paper title"?</p>
+      <p>All questions need a score and a comment.<br>Once completed you cannot change your answers.<br>Submit review for "Sample paper title"?</p>
       <form method="post">
         <div class="actions">
           <button type="button" class="cancel-btn" command="close" commandfor="completePopup">Cancel</button>
-          <button type="submit" class="submit-btn">Confirm Complete</button>
+          <button type="submit" form="reviewForm" class="submit-btn">Confirm Complete</button>
         </div>
       </form>
     </dialog>
