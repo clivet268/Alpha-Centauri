@@ -24,7 +24,7 @@
 }
 
 .rubriclist{
-  width: 800px;
+  width: fill;
   border: 1px solid #ccc;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .assignmentList{
-  width: 800px;
+  width: fill;
   border: 1px solid #ccc;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .issuelist{
-  width: 800px;
+  width: fill;
   border: 1px solid #ccc;
 }
 
