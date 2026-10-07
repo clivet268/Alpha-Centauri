@@ -24,7 +24,7 @@
 }
 
 .rubriclist{
-  width: 800px;
+  width: fill;
   border: 1px solid #ccc;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .assignmentList{
-  width: 800px;
+  width: fill;
   border: 1px solid #ccc;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .issuelist{
-  width: 800px;
+  width: fill;
   border: 1px solid #ccc;
 }
 
@@ -98,7 +98,7 @@
 .questionstable table{
   display: grid;
   /* bruh */
-  grid-template-columns: 6fr 1fr 1fr 1fr 1fr 1fr 16fr minmax(30px, 1fr);
+  grid-template-columns: 6fr 1fr 1fr 1fr 1fr 1fr 16fr minmax(70px, 1fr);
   background: #f2f6f8;
 }
 
@@ -264,3 +264,113 @@
 
 /*https://webformatter.com/html*/
 /*https://symbl.cc/en/1C1E/*/
+
+.actionbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: #92b6f8;
+  padding: 6px;
+  width: 800px;
+  box-sizing: border-box;
+}
+
+.actionbar button.danger,
+button.danger {
+  background-color: #d00f1e;
+}
+
+.popup {
+  background: #d2d6f8;
+  border-radius: 20px;
+}
+
+.popup .field {
+  margin: 8px 0;
+}
+
+.popup label {
+  display: inline-block;
+  min-width: 130px;
+}
+
+.popup .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.pinbox {
+  font-size: 24px;
+  font-family: monospace;
+  background: #f2f6f8;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 6px 10px;
+  margin: 4px 0 10px 0;
+}
+
+.selected td {
+  background-color: #fff3b0;
+}
+
+.editable {
+  background: #fff;
+  border: 1px dashed #26262680;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.infobar {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 10px;
+  background: #92b6f8;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+}
+
+.picked {
+  outline: 3px solid #226688;
+  outline-offset: -3px;
+  font-weight: bold;
+}
+
+.readonly-note {
+  text-align: center;
+  padding: 4px;
+}
+
+.answercell {
+  display: grid;
+  justify-items: center;
+}
+
+.status-line {
+  text-align: center;
+  padding: 4px;
+  color: #226688;
+}
+
+.commentcell {
+  text-align: left;
+  grid-column: span 8;
+  background: #f2f6f8;
+}
+
+.commentcell textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 48px;
+  font-size: 12px;
+}
+
+.commenttext {
+  background: #fff;
+  border: 1px solid #26262680;
+  border-radius: 3px;
+  padding: 5px;
+  font-size: 12px;
+}
