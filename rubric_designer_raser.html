@@ -24,7 +24,7 @@
           </div>
             <!-- auth on important actions? if im reading the payloads right -268 -->
           <button class="deprecate" id="deprecate" style="justify-self: end; background-color: #d0df1e"id="delete">Deprecate Current Rubric</button>
-          <div>        </div>
+          <button type="button" class="view" id="view" onclick="location.href='rubric_designer_view.html'">View Rubric (Read-only)</button>
             <!-- auth on important actions? if im reading the payloads right -268 -->
           <button class="delete" id="delete" style="justify-self: end; background-color: #d00f1e" id="delete">Delete Current Rubric</button> <!-- TODO post rubricId -268 -->
         </form>
@@ -81,7 +81,7 @@
                     references included but not all relevant; 2 = few references; 1 = no cited references
                   </td>
                   <td>
-                    <button type="button" class="addquestion">ᰞ</button>
+                    <button type="button" class="addquestion danger" title="Delete this question" style="background-color: #d00f1e">Delete</button>
                   </td>
                 </tr>
                 <tr>
@@ -96,7 +96,7 @@
                     just click these to edit them
                   </td>
                   <td>
-                    <button type="button" class="addquestion">ᰞ</button>
+                    <button type="button" class="addquestion danger" title="Delete this question" style="background-color: #d00f1e">Delete</button>
                   </td>
                 </tr>
                 <tr>
@@ -123,7 +123,7 @@
                     references included but not all relevant; 2 = few references; 1 = no cited references
                   </td>
                   <td>
-                    <button type="button" class="addquestion">ᰞ</button>
+                    <button type="button" class="addquestion danger" title="Delete this question" style="background-color: #d00f1e">Delete</button>
                   </td>
                 </tr>
                 <tr>
@@ -138,7 +138,7 @@
                     just click these to edit them
                   </td>
                   <td>
-                    <button type="button" class="addquestion">ᰞ</button>
+                    <button type="button" class="addquestion danger" title="Delete this question" style="background-color: #d00f1e">Delete</button>
                   </td>
                 </tr>
                 <tr>
@@ -164,7 +164,7 @@
                     references included but not all relevant; 2 = few references; 1 = no cited references
                   </td>
                   <td>
-                    <button type="button" class="addquestion">ᰞ</button>
+                    <button type="button" class="addquestion danger" title="Delete this question" style="background-color: #d00f1e">Delete</button>
                   </td>
                 </tr>
                 <tr>
@@ -179,7 +179,7 @@
                     just click these to edit them
                   </td>
                   <td>
-                    <button type="button" class="addquestion">ᰞ</button>
+                    <button type="button" class="addquestion danger" title="Delete this question" style="background-color: #d00f1e">Delete</button>
                   </td>
                 </tr>
                 <tr>
@@ -204,7 +204,7 @@
                     references included but not all relevant; 2 = few references; 1 = no cited references
                   </td>
                   <td>
-                    <button type="button" class="addquestion">ᰞ</button>
+                    <button type="button" class="addquestion danger" title="Delete this question" style="background-color: #d00f1e">Delete</button>
                   </td>
                 </tr>
                 <tr>
@@ -219,7 +219,7 @@
                     just click these to edit them
                   </td>
                   <td>
-                    <button type="button" class="addquestion">ᰞ</button>
+                    <button type="button" class="addquestion danger" title="Delete this question" style="background-color: #d00f1e">Delete</button>
                   </td>
                 </tr>
                 <tr>
@@ -246,7 +246,7 @@
                     references included but not all relevant; 2 = few references; 1 = no cited references
                   </td>
                   <td>
-                    <button type="button" class="addquestion">ᰞ</button>
+                    <button type="button" class="addquestion danger" title="Delete this question" style="background-color: #d00f1e">Delete</button>
                   </td>
                 </tr>
                 <tr>
@@ -261,7 +261,7 @@
                     just click these to edit them
                   </td>
                   <td>
-                    <button type="button" class="addquestion">ᰞ</button>
+                    <button type="button" class="addquestion danger" title="Delete this question" style="background-color: #d00f1e">Delete</button>
                   </td>
                 </tr>
                 <tr>
@@ -283,7 +283,9 @@
                     70
                   </th>
                   <th>
-                    >= 55 = High Score  40 to 55 moderate < 40 = low
+                    High &gt;= <span class="editable" contentEditable="true">55</span>
+                    &nbsp; Low &lt; <span class="editable" contentEditable="true">40</span>
+                    &nbsp; (in between = moderate)
                   </th>
                 </tr>
               </thead>
