@@ -3,27 +3,26 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "workspaces": [
+    "frontend",
+    "backend",
+    "infra"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "oxlint",
-    "preview": "vite preview",
-    "format": "prettier --write src",
-    "format:check": "prettier --check src"
-  },
-  "dependencies": {
-    "axios": "^1.21.0",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "dev": "npm run dev -w frontend",
+    "build": "npm run build -w frontend",
+    "lint": "npm run lint -w frontend",
+    "preview": "npm run preview -w frontend",
+    "format": "npm run format -w frontend",
+    "format:check": "npm run format:check -w frontend",
+    "dev:api": "npm run dev -w backend",
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "test:api": "npm test -w backend",
+    "typecheck:api": "npm run typecheck -w backend && npm run typecheck -w infra",
+    "deploy": "npm run deploy -w infra"
   },
   "devDependencies": {
-    "@types/node": "^24.19.2",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "^6.1.2",
-    "oxlint": "^1.89.0",
-    "prettier": "^3.9.10",
-    "typescript": "~7.0.2",
-    "vite": "^8.3.5"
+    "typescript": "~7.0.2"
   }
 }

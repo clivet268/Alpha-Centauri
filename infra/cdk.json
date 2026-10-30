@@ -1,0 +1,22 @@
+{
+  "app": "npx tsx bin/app.ts",
+  "watch": {
+    "include": ["bin/**", "lib/**", "../backend/src/**"]
+  },
+  "context": {
+    "account": "681498213804",
+    "region": "us-east-2",
+    "db": {
+      "host": "cs509-raser.cluster-c98mmu0oi7oj.us-east-2.rds.amazonaws.com",
+      "port": 5432,
+      "name": "postgres",
+      "user": "postgres",
+      "clusterResourceId": "cluster-VC2EPEL5FTUJFKZOJRSRRAXQQI"
+    },
+    "api": {
+      "restApiId": "tu36tsfmjd",
+      "rootResourceId": "5gr3ltvpu5",
+      "stageName": "dev"
+    }
+  }
+}

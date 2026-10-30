@@ -1,0 +1,26 @@
+{
+  "name": "@raser/backend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./routes": "./src/routes.ts"
+  },
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=.env scripts/local-server.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@aws-sdk/rds-signer": "^3.1160.0",
+    "pg": "^8.23.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.164",
+    "@types/node": "^24.19.2",
+    "@types/pg": "^8.23.1",
+    "tsx": "^4.23.15",
+    "vitest": "^5.0.5"
+  }
+}
