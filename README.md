@@ -4,7 +4,7 @@ Alpha Centauri group project for WPI 509 Design of Software Systems
 - `frontend/`: Vite + React
 - `backend/src/handlers/`: one Lambda per use case
 - `backend/src/routes.ts`: maps each route to its handler
-- `infra/`: AWS CDK (API Gateway, Lambdas). Lambdas connect to the existing Aurora cluster set in `infra/cdk.json`, using IAM authentication.
+- `infra/`: AWS CDK (API Gateway, Lambdas, Amplify site). Lambdas connect to the existing Aurora cluster set in `infra/cdk.json`, using IAM authentication.
 
 ## Local
 
@@ -26,3 +26,5 @@ Add `backend/src/handlers/<area>/<action>.ts`, then add a line to `routes.ts`.
 npx -w infra cdk bootstrap   # once per AWS account
 npm run deploy
 ```
+
+Outputs `ApiUrl` and `WebUrl`. CDK builds the frontend on your machine during synth and publishes it to Amplify on deploy.

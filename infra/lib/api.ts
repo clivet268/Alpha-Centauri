@@ -1,5 +1,4 @@
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { ArnFormat, Duration, RemovalPolicy, Stack } from 'aws-cdk-lib'
 import * as apigw from 'aws-cdk-lib/aws-apigateway'
 import * as iam from 'aws-cdk-lib/aws-iam'
@@ -8,12 +7,28 @@ import { NodejsFunction, type NodejsFunctionProps } from 'aws-cdk-lib/aws-lambda
 import * as logs from 'aws-cdk-lib/aws-logs'
 import { Construct } from 'constructs'
 import { routes } from '@raser/backend/routes'
-import type { ApiConfig, DbConfig } from './raser-stack.ts'
 
-const handlersDir = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  '../../backend/src/handlers',
-)
+const handlersDir = path.resolve(import.meta.dirname, '../../backend/src/handlers')
+
+const cors = {
+  allowOrigins: apigw.Cors.ALL_ORIGINS,
+  allowHeaders: ['Content-Type'],
+  maxAge: Duration.hours(1),
+}
+
+export interface DbConfig {
+  host: string
+  port: number
+  name: string
+  user: string
+  clusterResourceId: string
+}
+
+export interface ApiConfig {
+  restApiId: string
+  rootResourceId: string
+  stageName: string
+}
 
 export interface ApiProps {
   db: DbConfig
@@ -22,7 +37,7 @@ export interface ApiProps {
 
 // One Lambda + one method per entry in backend/src/routes.ts, added to the existing REST API.
 export class Api extends Construct {
-  readonly stage: apigw.Stage
+  readonly url: string
 
   constructor(scope: Construct, id: string, { db, api: apiConfig }: ApiProps) {
     super(scope, id)
@@ -65,7 +80,7 @@ export class Api extends Construct {
     })
 
     const methods: apigw.Method[] = []
-    const corsPaths = new Set<string>()
+    const methodsByPath = new Map<string, string[]>()
 
     for (const [key, file] of Object.entries(routes)) {
       const [method, routePath] = key.split(' ') as [string, string]
@@ -85,25 +100,22 @@ export class Api extends Construct {
 
       const resource = api.root.resourceForPath(routePath)
       methods.push(resource.addMethod(method, new apigw.LambdaIntegration(fn)))
-
-      if (!corsPaths.has(routePath)) {
-        corsPaths.add(routePath)
-        resource.addCorsPreflight({
-          allowOrigins: apigw.Cors.ALL_ORIGINS,
-          allowMethods: ['GET', 'POST'],
-          allowHeaders: ['Content-Type'],
-          maxAge: Duration.hours(1),
-        })
-      }
+      methodsByPath.set(routePath, [...(methodsByPath.get(routePath) ?? []), method])
     }
 
+    for (const [routePath, allowMethods] of methodsByPath) {
+      methods.push(api.root.resourceForPath(routePath).addCorsPreflight({ ...cors, allowMethods }))
+    }
+
+    // The hash must change with whatever the stage serves, or the new config never goes live.
     const deployment = new apigw.Deployment(this, 'Deployment', { api })
-    deployment.addToLogicalId(Object.keys(routes))
+    deployment.addToLogicalId({ routes: Object.keys(routes), cors: JSON.stringify(cors) })
     for (const m of methods) deployment.node.addDependency(m)
 
-    this.stage = new apigw.Stage(this, 'Stage', {
+    const stage = new apigw.Stage(this, 'Stage', {
       deployment,
       stageName: apiConfig.stageName,
     })
+    this.url = stage.urlForPath()
   }
 }

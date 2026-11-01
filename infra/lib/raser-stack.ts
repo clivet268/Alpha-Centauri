@@ -1,25 +1,9 @@
 import { CfnOutput, Stack, type StackProps } from 'aws-cdk-lib'
 import type { Construct } from 'constructs'
-import { Api } from './api.ts'
+import { Api, type ApiProps } from './api.ts'
+import { Web } from './web.ts'
 
-export interface DbConfig {
-  host: string
-  port: number
-  name: string
-  user: string
-  clusterResourceId: string
-}
-
-export interface ApiConfig {
-  restApiId: string
-  rootResourceId: string
-  stageName: string
-}
-
-export interface RaserStackProps extends StackProps {
-  db: DbConfig
-  api: ApiConfig
-}
+export interface RaserStackProps extends StackProps, ApiProps {}
 
 export class RaserStack extends Stack {
   constructor(scope: Construct, id: string, props: RaserStackProps) {
@@ -28,8 +12,19 @@ export class RaserStack extends Stack {
     const api = new Api(this, 'Api', { db: props.db, api: props.api })
 
     new CfnOutput(this, 'ApiUrl', {
-      value: api.stage.urlForPath(),
-      description: 'Set as VITE_API_BASE_URL for the frontend build',
+      value: api.url,
+      description: 'API Gateway stage URL',
+    })
+
+    const { restApiId, stageName } = props.api
+    const web = new Web(this, 'Web', {
+      apiUrl: `https://${restApiId}.execute-api.${this.region}.amazonaws.com/${stageName}/`,
+      branchName: stageName,
+    })
+
+    new CfnOutput(this, 'WebUrl', {
+      value: web.url,
+      description: 'Amplify site',
     })
   }
 }

@@ -1,5 +1,6 @@
 import { App } from 'aws-cdk-lib'
-import { RaserStack, type ApiConfig, type DbConfig } from '../lib/raser-stack.ts'
+import type { ApiConfig, DbConfig } from '../lib/api.ts'
+import { RaserStack } from '../lib/raser-stack.ts'
 
 const app = new App()
 
