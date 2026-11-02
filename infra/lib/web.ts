@@ -38,7 +38,11 @@ export class Web extends Construct {
       },
     })
 
-    const app = new amplify.App(this, 'App', { appName: 'raser', platform: amplify.Platform.WEB })
+    const app = new amplify.App(this, 'App', {
+      appName: 'raser',
+      platform: amplify.Platform.WEB,
+      customRules: [amplify.CustomRule.SINGLE_PAGE_APPLICATION_REDIRECT],
+    })
     new amplify.Branch(this, 'Branch', { app, branchName, asset: site })
 
     this.url = `https://${branchName}.${app.defaultDomain}`

@@ -1,12 +1,17 @@
 import { z } from 'zod'
 import { transaction } from '../../shared/db.ts'
-import { conflict, handle, notFound, parseBody } from '../../shared/http.ts'
+import {
+  conflict,
+  handle,
+  invalidInput,
+  notFound,
+  parseBody,
+} from '../../shared/http.ts'
 
-const Body = z
-  .object({
-    rubricId: z.string().startsWith('rb_'),
-    replacementRubricId: z.string().startsWith('rb_'),
-  })
+const Body = z.object({
+  rubricId: z.string().startsWith('rb_'),
+  replacementRubricId: z.string().startsWith('rb_'),
+})
 
 export interface DeprecateRubricResponse {
   rubricId: string
@@ -18,6 +23,10 @@ export interface DeprecateRubricResponse {
 export const handler = handle(
   async (event): Promise<DeprecateRubricResponse> => {
     const { rubricId, replacementRubricId } = parseBody(event, Body)
+
+    if (rubricId === replacementRubricId) {
+      throw invalidInput('replacementRubricId must be a different rubric.')
+    }
 
     return transaction(async (client) => {
       const { rows } = await client.query<{
@@ -54,7 +63,7 @@ export const handler = handle(
       if (replacement.publish_date! < rubric.publish_date!) {
         throw conflict(
           'REPLACEMENT_NOT_NEWER',
-          'Replacement rubric must be published after this rubric.',
+          'Replacement rubric must have a published date later than the current rubric published date.',
         )
       }
 

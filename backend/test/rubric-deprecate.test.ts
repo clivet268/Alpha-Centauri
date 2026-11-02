@@ -53,6 +53,13 @@ describe('Deprecate Rubric', () => {
     })
   })
 
+  it('400 when a rubric names itself as replacement', async () => {
+    const rubricId = await seedRubric()
+    const r = await deprecate(rubricId, rubricId)
+    expect(r.status).toBe(400)
+    expect((await readRubric(rubricId)).state).toBe('Published')
+  })
+
   it('409 NOT_PUBLISHED for an unpublished rubric', async () => {
     const rubricId = await seedRubric(null)
     const replacement = await seedRubric()
