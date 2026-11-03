@@ -5,7 +5,9 @@ interface AuthCardProps {
   heading: string
   fields: AuthField[]
   submitLabel: string
-  onSubmit?: () => void
+  onSubmit?: (values: Record<string, string>) => void
+  error?: string
+  busy?: boolean
 }
 
 export function AuthCard({
@@ -13,10 +15,16 @@ export function AuthCard({
   fields,
   submitLabel,
   onSubmit,
+  error,
+  busy = false,
 }: AuthCardProps) {
-  function handleSubmit(e: FormEvent) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    onSubmit?.()
+    const values: Record<string, string> = {}
+    for (const [name, value] of new FormData(e.currentTarget)) {
+      values[name] = String(value)
+    }
+    onSubmit?.(values)
   }
 
   return (
@@ -33,8 +41,15 @@ export function AuthCard({
           required
         />
       ))}
+      {error && (
+        <div className="error-text" role="alert">
+          {error}
+        </div>
+      )}
       <div className="actions">
-        <button type="submit">{submitLabel}</button>
+        <button type="submit" disabled={busy}>
+          {busy ? 'Please wait...' : submitLabel}
+        </button>
       </div>
     </form>
   )

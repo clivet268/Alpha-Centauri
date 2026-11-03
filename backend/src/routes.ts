@@ -6,6 +6,7 @@ export const routes = {
   'GET /rubric/list': 'rubric/list',
   'GET /journal/dashboard': 'journal/dashboard',
   'POST /journal/register': 'journal/register',
+  'POST /journal/login': 'journal/login',
 } as const
 
 export type RouteKey = keyof typeof routes
