@@ -43,6 +43,14 @@ export const listRubrics = (limit: number, offset: number) =>
 export const getRubric = (rubricId: string) =>
   api.get<Rubric>('/rubric/get', { params: { rubricId } })
 
+export const createRubric = (name: string) =>
+  api.post<{ rubricId: string }>('/rubric/create', { name })
+
+export const deleteRubric = (rubricId: string) =>
+  api.post<{ rubricId: string; deletedAt: string }>('/rubric/delete', {
+    rubricId,
+  })
+
 export const publishRubric = (rubricId: string) =>
   api.post<{ publishDate: string }>('/rubric/publish', { rubricId })
 

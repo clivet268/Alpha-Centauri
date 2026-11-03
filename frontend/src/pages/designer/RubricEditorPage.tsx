@@ -128,8 +128,17 @@ export default function RubricEditorPage() {
           View Rubric (Read-only)
         </button>
         {/* auth on important actions? if im reading the payloads right -268 */}
-        {/* TODO post rubricId -268 */}
-        <button type="button" className="danger">
+        <button
+          type="button"
+          className="danger"
+          disabled={rubric.state !== 'Unpublished'}
+          title={
+            rubric.state === 'Unpublished'
+              ? undefined
+              : 'Published rubrics cannot be deleted'
+          }
+          onClick={() => setAction('delete')}
+        >
           Delete Current Rubric
         </button>
       </div>
@@ -187,6 +196,10 @@ export default function RubricEditorPage() {
           action={action}
           onCancel={() => setAction(undefined)}
           onDone={(changes) => {
+            if (action === 'delete') {
+              navigate('/designer/rubric')
+              return
+            }
             setAction(undefined)
             setResult({
               rubricId,

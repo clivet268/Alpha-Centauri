@@ -10,8 +10,8 @@ Alpha Centauri group project for WPI 509 Design of Software Systems
 
 | Use Cases | Assigned To | Status |
 | :--- | :---: | ---: |
-| Create Rubric | Ryan | ❌ Not done |
-| Delete Rubric | Ryan | ❌ Not done |
+| Create Rubric | Ryan | ✅ Done |
+| Delete Rubric | Ryan | ✅ Done |
 | Register Journal | Clive | ✅ Done |
 | Show Journal Dashboard | Clive | ✅ Done |
 | Create Issue | AJ | ❌ Not done |
