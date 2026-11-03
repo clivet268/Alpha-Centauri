@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router'
 import HomePage from './pages/HomePage'
 import RubricEditor from './pages/RubricEditor'
+import RubricList from './pages/RubricList'
 import DesignerAuthPage from './pages/designer/DesignerAuthPage'
 import RubricEditorPage from './pages/designer/RubricEditorPage'
 import RubricViewPage from './pages/designer/RubricViewPage'
@@ -15,6 +16,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
 
+      <Route path="/rubric" element={<RubricList />} />
       <Route path="/rubric/:rubricId" element={<RubricEditor />} />
 
       <Route path="/designer/login" element={<DesignerAuthPage />} />

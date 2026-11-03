@@ -10,6 +10,7 @@ export default function HomePage() {
           <Link to="/designer/login">Rubric Designer Auth</Link>
           <Link to="/designer/rubrics">Rubric Designer</Link>
           <Link to="/designer/rubrics/view">Rubric View</Link>
+          <Link to="/rubric">Rubric List</Link>
         </div>
         <div>
           <Link to="/editor/login">Journal Editor Auth</Link>

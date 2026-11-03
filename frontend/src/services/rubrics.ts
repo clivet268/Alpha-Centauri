@@ -20,6 +20,26 @@ export interface Rubric {
   questions: Question[]
 }
 
+export interface RubricSummary {
+  rubricId: string
+  name: string
+  state: Rubric['state']
+  publishDate: string | null
+  questionCount: number
+}
+
+export interface RubricPage {
+  rubrics: RubricSummary[]
+  page: {
+    limit: number
+    offset: number
+    totalCount: number
+  }
+}
+
+export const listRubrics = (limit: number, offset: number) =>
+  api.get<RubricPage>('/rubric/list', { params: { limit, offset } })
+
 export const getRubric = (rubricId: string) =>
   api.get<Rubric>('/rubric/get', { params: { rubricId } })
 
