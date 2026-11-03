@@ -4,6 +4,8 @@ export const routes = {
   'POST /rubric/deprecate': 'rubric/deprecate',
   'GET /rubric/get': 'rubric/get',
   'GET /rubric/list': 'rubric/list',
+  'GET /journal/dashboard': 'journal/dashboard',
+  'POST /journal/register': 'journal/register',
 } as const
 
 export type RouteKey = keyof typeof routes
