@@ -10,6 +10,7 @@ interface ListTableProps<T> {
   columns: Column<T>[]
   rows: T[]
   selectedRows?: number[]
+  onRowClick?: (row: T, index: number) => void
 }
 
 export default function ListTable<T>({
@@ -17,6 +18,7 @@ export default function ListTable<T>({
   columns,
   rows,
   selectedRows = [],
+  onRowClick,
 }: ListTableProps<T>) {
   return (
     <table className={`grid-table ${className}`}>
@@ -31,7 +33,15 @@ export default function ListTable<T>({
         {rows.map((row, i) => (
           <tr
             key={i}
-            className={selectedRows.includes(i) ? 'selected' : undefined}
+            className={
+              [
+                selectedRows.includes(i) ? 'selected' : '',
+                onRowClick ? 'clickable' : '',
+              ]
+                .filter(Boolean)
+                .join(' ') || undefined
+            }
+            onClick={onRowClick ? () => onRowClick(row, i) : undefined}
           >
             {columns.map((c) => (
               <td key={c.header}>{c.render(row)}</td>

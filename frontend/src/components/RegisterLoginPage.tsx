@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { ApiError } from '../services/api'
 import { AuthCard } from './AuthForms'
 import {
   EMAIL_FIELD,
@@ -7,7 +9,31 @@ import {
 } from './authFields'
 import TitleBar from './TitleBar'
 
-export default function RegisterLoginPage({ title }: { title: string }) {
+interface RegisterLoginPageProps {
+  title: string
+  onRegister?: (values: Record<string, string>) => Promise<void>
+}
+
+export default function RegisterLoginPage({
+  title,
+  onRegister,
+}: RegisterLoginPageProps) {
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState<string>()
+
+  async function handleRegister(values: Record<string, string>) {
+    if (!onRegister) return
+    setBusy(true)
+    setError(undefined)
+    try {
+      await onRegister(values)
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not register.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
   return (
     <div className="page">
       <TitleBar title={title} />
@@ -22,6 +48,9 @@ export default function RegisterLoginPage({ title }: { title: string }) {
               PASSWORD_FIELD,
             ]}
             submitLabel="Authenticate"
+            onSubmit={onRegister ? handleRegister : undefined}
+            error={error}
+            busy={busy}
           />
           <AuthCard
             heading="Login"
