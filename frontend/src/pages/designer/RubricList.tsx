@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router'
-import { ApiError } from '../services/api.ts'
-import { listRubrics, type RubricPage } from '../services/rubrics.ts'
+import { Link, useNavigate, useSearchParams } from 'react-router'
+import { ApiError } from '../../services/api.ts'
+import { listRubrics, type RubricPage } from '../../services/rubrics.ts'
 
 const PAGE_SIZE = 20
 
@@ -15,6 +15,7 @@ function errorMessage(err: unknown): string {
 }
 
 function RubricList() {
+  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const requested = Number(searchParams.get('page'))
   const currentPage =
@@ -45,7 +46,7 @@ function RubricList() {
   }, [offset])
 
   if (load.status === 'loading') {
-    return <p className="rubric-editor-status">Loading rubrics…</p>
+    return <p className="rubric-editor-status">Loading rubrics...</p>
   }
   if (load.status === 'error') {
     return (
@@ -61,6 +62,9 @@ function RubricList() {
   return (
     <div className="rubric-list">
       <h1>Rubrics</h1>
+      <button type="button" onClick={() => navigate('/designer/rubric/new')}>
+        Create New Rubric
+      </button>
       <div className="table-scroll">
         <table>
           <thead>
@@ -76,7 +80,7 @@ function RubricList() {
             {rubrics.map((rubric) => (
               <tr key={rubric.rubricId}>
                 <td>
-                  <Link to={`/rubric/${rubric.rubricId}`}>
+                  <Link to={`/designer/rubric/${rubric.rubricId}`}>
                     {rubric.rubricId}
                   </Link>
                 </td>

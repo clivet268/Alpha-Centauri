@@ -1,10 +1,10 @@
 import { useState, type FormEvent } from 'react'
-import Dialog from '../components/Dialog.tsx'
+import Dialog from '../../components/Dialog.tsx'
 import {
   deprecateRubric,
   publishRubric,
   type Rubric,
-} from '../services/rubrics.ts'
+} from '../../services/rubrics.ts'
 
 export type RubricAction = 'publish' | 'deprecate'
 

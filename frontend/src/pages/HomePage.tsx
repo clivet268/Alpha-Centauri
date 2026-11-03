@@ -8,9 +8,8 @@ export default function HomePage() {
       <div className="home-links">
         <div>
           <Link to="/designer/login">Rubric Designer Auth</Link>
-          <Link to="/designer/rubrics">Rubric Designer</Link>
-          <Link to="/designer/rubrics/view">Rubric View</Link>
-          <Link to="/rubric">Rubric List</Link>
+          <Link to="/designer/rubric">Rubric Designer</Link>
+          <Link to="/designer/rubric/view">Rubric View</Link>
         </div>
         <div>
           <Link to="/editor/login">Journal Editor Auth</Link>

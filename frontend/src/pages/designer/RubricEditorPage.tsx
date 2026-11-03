@@ -1,47 +1,130 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router'
-import FormModal from '../../components/FormModal'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router'
 import RubricTable from '../../components/RubricTable'
 import ScoreSummary from '../../components/ScoreSummary'
-import { SAMPLE_VIEW_URL, sampleQuestions } from '../../data/sampleData'
+import { ApiError } from '../../services/api'
+import {
+  getRubric,
+  type Rating as ApiRating,
+  type Rubric,
+} from '../../services/rubrics'
+import { RATINGS, type Question } from '../../types'
+import RubricActionDialog, { type RubricAction } from './RubricActionDialog'
+
+const MAX_RATING = 5
+
+type Load =
+  | { status: 'loading' }
+  | { status: 'error'; message: string }
+  | { status: 'loaded'; rubric: Rubric }
+
+function errorMessage(err: unknown): string {
+  if (!(err instanceof ApiError)) return 'Could not load rubric.'
+  return err.status === 404 || err.status === 400
+    ? 'Rubric not found.'
+    : err.message
+}
+
+function tableQuestions(rubric: Rubric): Question[] {
+  return rubric.questions.map((q, position) => ({
+    questionId: q.questionId,
+    rubricId: rubric.rubricId,
+    section: q.section as Question['section'],
+    position,
+    text: q.text,
+    explanations: RATINGS.map(
+      (rating) => q.explanations[String(rating) as ApiRating],
+    ),
+    updatedAt: '',
+  }))
+}
 
 export default function RubricEditorPage() {
   const navigate = useNavigate()
-  const [createOpen, setCreateOpen] = useState(false)
+  const { rubricId = '' } = useParams()
+  const [result, setResult] = useState<{ rubricId: string; load: Load }>()
+  const [action, setAction] = useState<RubricAction>()
+  const load: Load =
+    result?.rubricId === rubricId ? result.load : { status: 'loading' }
+
+  useEffect(() => {
+    let stale = false
+    getRubric(rubricId)
+      .then((rubric) => {
+        if (!stale) {
+          setResult({ rubricId, load: { status: 'loaded', rubric } })
+        }
+      })
+      .catch((err: unknown) => {
+        if (!stale) {
+          setResult({
+            rubricId,
+            load: { status: 'error', message: errorMessage(err) },
+          })
+        }
+      })
+    return () => {
+      stale = true
+    }
+  }, [rubricId])
+
+  if (load.status === 'loading') {
+    return <p className="rubric-editor-status">Loading rubric...</p>
+  }
+  if (load.status === 'error') {
+    return (
+      <p className="rubric-editor-status" role="alert">
+        {load.message}
+      </p>
+    )
+  }
+
+  const { rubric } = load
+  const editable = rubric.state === 'Unpublished'
 
   return (
     <div className="page">
       <div className="control-bar">
-        {/* I want the rubric select to be a popup dialogue what you can scroll through,
-            we CAN feed the list here and make it have a next x rubrics BUT its way more
-            friendly with its own window -268 */}
-        <label htmlFor="rubricsSelect">Select Rubric:</label>
-        <select id="rubricsSelect" name="rubricsSelect">
-          <option value="">Select Rubric</option>
-          <option value="anotherRubric">Another Rubric</option>
-        </select>
-        <button type="button" onClick={() => setCreateOpen(true)}>
-          Create New Rubric
+        <button type="button" onClick={() => navigate('/designer/rubric')}>
+          Back to Rubrics
         </button>
         <button type="button">Duplicate Current Rubric</button>
-        <button type="button">Publish Current Rubric</button>
+        <button
+          type="button"
+          disabled={rubric.state !== 'Unpublished'}
+          title={
+            rubric.state === 'Unpublished'
+              ? undefined
+              : 'Rubric is already published'
+          }
+          onClick={() => setAction('publish')}
+        >
+          Publish Current Rubric
+        </button>
 
         <div
           className="title-input spacer"
-          contentEditable
+          contentEditable={editable}
           suppressContentEditableWarning
         >
-          Click To Edit Rubric Title
+          {rubric.name}
         </div>
 
         {/* auth on important actions? if im reading the payloads right -268 */}
-        <button type="button" className="warning">
-          Deprecate Current Rubric
-        </button>
         <button
           type="button"
-          onClick={() => navigate('/designer/rubrics/view')}
+          className="warning"
+          disabled={rubric.state !== 'Published'}
+          title={
+            rubric.state === 'Published'
+              ? undefined
+              : 'Only published rubrics can be deprecated'
+          }
+          onClick={() => setAction('deprecate')}
         >
+          Deprecate Current Rubric
+        </button>
+        <button type="button" onClick={() => navigate('/designer/rubric/view')}>
           View Rubric (Read-only)
         </button>
         {/* auth on important actions? if im reading the payloads right -268 */}
@@ -51,44 +134,67 @@ export default function RubricEditorPage() {
         </button>
       </div>
 
+      <div className="readonly-note">
+        State: {rubric.state}
+        {rubric.publishDate && (
+          <> &middot; Publish date: {rubric.publishDate}</>
+        )}
+      </div>
+      {rubric.replacementRubricId && (
+        <div className="readonly-note" role="status">
+          This rubric is deprecated. Use{' '}
+          <Link to={`/designer/rubric/${rubric.replacementRubricId}`}>
+            {rubric.replacementRubricId}
+          </Link>{' '}
+          instead.
+        </div>
+      )}
+
       <RubricTable
-        mode="edit"
-        questions={sampleQuestions}
-        viewUrl={SAMPLE_VIEW_URL}
+        mode={editable ? 'edit' : 'view'}
+        questions={tableQuestions(rubric)}
+        viewUrl={rubric.rubricId}
       />
       <ScoreSummary
         label="Maximum Possible Score"
-        value="70"
+        value={MAX_RATING * rubric.questions.length}
         legend={
           <>
             High &gt;={' '}
             <span
               className="editable"
-              contentEditable
+              contentEditable={editable}
               suppressContentEditableWarning
             >
-              55
+              {rubric.highThreshold ?? 'Not set'}
             </span>{' '}
             &nbsp; Low &lt;{' '}
             <span
               className="editable"
-              contentEditable
+              contentEditable={editable}
               suppressContentEditableWarning
             >
-              40
+              {rubric.lowThreshold ?? 'Not set'}
             </span>{' '}
             &nbsp; (in between = moderate)
           </>
         }
       />
 
-      {/* TODO -268 */}
-      <FormModal
-        open={createOpen}
-        title="Create New Rubric"
-        fields={[{ name: 'name', label: 'Rubric Name' }]}
-        onClose={() => setCreateOpen(false)}
-      />
+      {action && (
+        <RubricActionDialog
+          rubric={rubric}
+          action={action}
+          onCancel={() => setAction(undefined)}
+          onDone={(changes) => {
+            setAction(undefined)
+            setResult({
+              rubricId,
+              load: { status: 'loaded', rubric: { ...rubric, ...changes } },
+            })
+          }}
+        />
+      )}
     </div>
   )
 }
