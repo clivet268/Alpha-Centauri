@@ -70,7 +70,15 @@ export function parseBody<T>(event: Event, schema: z.ZodType<T>): T {
     }
   }
 
-  const result = schema.safeParse(parsed)
+  return validate(parsed, schema)
+}
+
+export function parseQuery<T>(event: Event, schema: z.ZodType<T>): T {
+  return validate(event.queryStringParameters ?? {}, schema)
+}
+
+function validate<T>(input: unknown, schema: z.ZodType<T>): T {
+  const result = schema.safeParse(input)
   if (!result.success) {
     throw invalidInput(
       result.error.issues

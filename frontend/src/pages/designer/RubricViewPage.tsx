@@ -9,19 +9,8 @@ export default function RubricViewPage() {
   return (
     <div className="page">
       <div className="control-bar">
-        <label htmlFor="rubricsSelect">Select Rubric:</label>
-        <select
-          id="rubricsSelect"
-          name="rubricsSelect"
-          defaultValue="anotherRubric"
-        >
-          <option value="">Select Rubric</option>
-          <option value="anotherRubric">
-            Sample rubric (rb_8c1e) - Published
-          </option>
-        </select>
-        <button type="button" onClick={() => navigate('/designer/rubrics')}>
-          Back to Editor
+        <button type="button" onClick={() => navigate('/designer/rubric')}>
+          Back to Rubrics
         </button>
         <div className="spacer title-input">Sample rubric</div>
       </div>
