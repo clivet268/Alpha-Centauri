@@ -6,7 +6,39 @@ Alpha Centauri group project for WPI 509 Design of Software Systems
 - `backend/src/routes.ts`: maps each route to its handler
 - `infra/`: AWS CDK (API Gateway, Lambdas, Amplify site). Lambdas connect to the existing Aurora cluster set in `infra/cdk.json`, using IAM authentication.
 
-## Local
+## Iteration 1 use cases
+
+| Use Cases | Assigned To | Status |
+| :--- | :---: | ---: |
+| Create Rubric | Ryan | ❌ Not done |
+| Delete Rubric | Ryan | ❌ Not done |
+| Register Journal | Clive | ✅ Done |
+| Show Journal Dashboard | Clive | ✅ Done |
+| Create Issue | AJ | ❌ Not done |
+| Add Paper | AJ | ❌ Not done |
+| Publish Rubric | Lucky | ✅ Done |
+| Deprecate Rubric | Lucky | ✅ Done |
+
+### Demo Videos
+
+Use cases demo videos are in `demo/` directory.
+
+### Links
+
+- Homepage - https://dev.dkypn84dd07cn.amplifyapp.com
+- API - https://tu36tsfmjd.execute-api.us-east-2.amazonaws.com/dev
+- Rubric Designer View (after login) - https://dev.dkypn84dd07cn.amplifyapp.com/designer/rubric
+- Journal Dashboard - https://dev.dkypn84dd07cn.amplifyapp.com/editor/dashboard
+
+### Login Credentials
+
+You can either register a new Journal or use the following Login credentials for existing journal:
+
+- Email: editor1@journal.com
+- Password: password123
+
+
+## Local Setup
 
 ```bash
 npm install

@@ -1,5 +1,5 @@
 import RegisterLoginPage from '../../components/RegisterLoginPage'
 
 export default function DesignerAuthPage() {
-  return <RegisterLoginPage title="Journal Editor Auth" />
+  return <RegisterLoginPage title="Rubric Designer Auth" />
 }

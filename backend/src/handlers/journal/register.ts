@@ -22,7 +22,7 @@ export interface RegisterJournalResponse {
   expiresAt: string
 }
 
-const RUBRIC_ID_RE = /^rb_[A-Za-z0-9]+$/
+// const RUBRIC_ID_RE = /^rb_[A-Za-z0-9]+$/
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export const handler = handle(async (event): Promise<RegisterJournalResponse> => {
@@ -34,7 +34,7 @@ export const handler = handle(async (event): Promise<RegisterJournalResponse> =>
 
   const rubricId = (body.rubricId ?? '').trim()
   if (!rubricId) throw invalidInput('rubricId is required.')
-  if (!RUBRIC_ID_RE.test(rubricId)) throw invalidInput('rubricId is not a valid rubric ID.')
+  // if (!RUBRIC_ID_RE.test(rubricId)) throw invalidInput('rubricId is not a valid rubric ID.')
 
   // Stored lowercase: account.email is UNIQUE and case-sensitive, so Login must lowercase too.
   const email = (body.email ?? '').trim().toLowerCase()
