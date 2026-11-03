@@ -69,6 +69,20 @@ export interface RegisterJournalResult {
 export const registerJournal = (body: RegisterJournalBody) =>
   api.post<RegisterJournalResult>('/journal/register', body)
 
+export interface LoginJournalBody {
+  email: string
+  password: string
+}
+
+export interface LoginJournalResult {
+  journalId: string
+  token: string
+  expiresAt: string
+}
+
+export const loginJournal = (body: LoginJournalBody) =>
+  api.post<LoginJournalResult>('/journal/login', body)
+
 // RubricTable renders the app-wide Question shape (explanations as an array ordered
 // 5..1, plus position/rubricId/updatedAt). The API returns explanations keyed by
 // rating and already ordered by section then position, so convert here.

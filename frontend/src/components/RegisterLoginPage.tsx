@@ -12,14 +12,18 @@ import TitleBar from './TitleBar'
 interface RegisterLoginPageProps {
   title: string
   onRegister?: (values: Record<string, string>) => Promise<void>
+  onLogin?: (values: Record<string, string>) => Promise<void>
 }
 
 export default function RegisterLoginPage({
   title,
   onRegister,
+  onLogin,
 }: RegisterLoginPageProps) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string>()
+  const [loginBusy, setLoginBusy] = useState(false)
+  const [loginError, setLoginError] = useState<string>()
 
   async function handleRegister(values: Record<string, string>) {
     if (!onRegister) return
@@ -31,6 +35,21 @@ export default function RegisterLoginPage({
       setError(err instanceof ApiError ? err.message : 'Could not register.')
     } finally {
       setBusy(false)
+    }
+  }
+
+  async function handleLogin(values: Record<string, string>) {
+    if (!onLogin) return
+    setLoginBusy(true)
+    setLoginError(undefined)
+    try {
+      await onLogin(values)
+    } catch (err) {
+      setLoginError(
+        err instanceof ApiError ? err.message : 'Could not log in.',
+      )
+    } finally {
+      setLoginBusy(false)
     }
   }
 
@@ -56,6 +75,9 @@ export default function RegisterLoginPage({
             heading="Login"
             fields={[EMAIL_FIELD, PASSWORD_FIELD]}
             submitLabel="Authenticate"
+            onSubmit={onLogin ? handleLogin : undefined}
+            error={loginError}
+            busy={loginBusy}
           />
         </div>
       </div>
