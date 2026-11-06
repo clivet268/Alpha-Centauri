@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 import { ApiError } from '../services/api'
 import { AuthCard } from './AuthForms'
 import {
@@ -20,6 +21,7 @@ export default function RegisterLoginPage({
   onRegister,
   onLogin,
 }: RegisterLoginPageProps) {
+  const navigate = useNavigate()
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string>()
   const [loginBusy, setLoginBusy] = useState(false)
@@ -55,7 +57,14 @@ export default function RegisterLoginPage({
 
   return (
     <div className="page">
-      <TitleBar title={title} />
+      <TitleBar
+        title={title}
+        left={
+          <button type="button" onClick={() => navigate('/')}>
+            Back to Home
+          </button>
+        }
+      />
       <div className="authspace">
         <div className="auth">
           <AuthCard

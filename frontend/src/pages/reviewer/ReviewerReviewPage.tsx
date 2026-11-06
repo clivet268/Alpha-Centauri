@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 import ConfirmModal from '../../components/ConfirmModal'
 import RubricTable from '../../components/RubricTable'
 import ScoreSummary from '../../components/ScoreSummary'
@@ -10,6 +11,7 @@ import {
 } from '../../data/sampleData'
 
 export default function ReviewerReviewPage() {
+  const navigate = useNavigate()
   const [confirmOpen, setConfirmOpen] = useState(false)
 
   return (
@@ -17,6 +19,9 @@ export default function ReviewerReviewPage() {
       <TitleBar
         left={
           <>
+            <button type="button" onClick={() => navigate('/review')}>
+              Back to Access
+            </button>
             <span>Paper: Sample paper title</span>
             <span>Assignment: as_e1d4</span>
           </>

@@ -7,7 +7,14 @@ export default function ReviewerAccessPage() {
 
   return (
     <div className="page">
-      <TitleBar title="Reviewer Access" />
+      <TitleBar
+        title="Reviewer Access"
+        left={
+          <button type="button" onClick={() => navigate('/')}>
+            Back to Home
+          </button>
+        }
+      />
       <div className="authspace">
         <div className="auth">
           <AuthCard
