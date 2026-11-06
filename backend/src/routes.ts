@@ -8,6 +8,7 @@ export const routes = {
   'GET /journal/dashboard': 'journal/dashboard',
   'POST /journal/register': 'journal/register',
   'POST /journal/login': 'journal/login',
+  'POST /issue/create': 'issue/create',
 } as const
 
 export type RouteKey = keyof typeof routes
