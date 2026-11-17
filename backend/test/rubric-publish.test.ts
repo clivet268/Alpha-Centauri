@@ -1,7 +1,7 @@
 import { afterAll, describe, expect, it } from 'vitest'
 import { handler } from '../src/handlers/rubric/publish.ts'
 import { closePool, query } from '../src/shared/db.ts'
-import { makeEvent, parse } from './helpers.ts'
+import { makeEvent, parse, testDesignerId } from './helpers.ts'
 
 async function seedRubric({
   thresholds = [10, 20],
@@ -13,7 +13,7 @@ async function seedRubric({
   const { rows: accounts } = await query<{ account_id: string }>(
     `INSERT INTO account (email, password_hash, role)
      VALUES ($1, 'x', 'RubricDesigner') RETURNING account_id`,
-    [`designer-${Date.now()}@test.org`],
+    [`designer-${crypto.randomUUID()}@test.org`],
   )
   const { rows: rubrics } = await query<{ rubric_id: string }>(
     `INSERT INTO rubric (designer_id, name, low_threshold, high_threshold)
@@ -40,7 +40,11 @@ async function readRubric(rubricId: string) {
 }
 
 const publish = async (rubricId: unknown) =>
-  parse(await handler(makeEvent({ body: { rubricId } })))
+  parse(
+    await handler(
+      makeEvent({ body: { designerId: await testDesignerId(), rubricId } }),
+    ),
+  )
 
 describe('Publish Rubric', () => {
   it('publishes a complete rubric and records the date', async () => {

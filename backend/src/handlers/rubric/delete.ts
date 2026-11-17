@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { transaction } from '../../shared/db.ts'
+import { requireDesigner } from '../../shared/designer.ts'
 import {
   conflict,
   handle,
@@ -9,6 +10,7 @@ import {
 } from '../../shared/http.ts'
 
 const Body = z.object({
+  designerId: z.string().optional(),
   rubricId: z.string().optional(),
 })
 
@@ -24,6 +26,8 @@ export const handler = handle(async (event): Promise<DeleteRubricResponse> => {
   if (!rubricId) throw invalidInput('rubricId is required.')
 
   return transaction(async (client) => {
+    await requireDesigner(client, body.designerId)
+
     const { rows } = await client.query<{ state: string }>(
       `SELECT state FROM rubric WHERE rubric_id = $1 FOR UPDATE`,
       [rubricId],

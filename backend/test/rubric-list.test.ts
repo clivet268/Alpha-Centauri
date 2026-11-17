@@ -29,7 +29,7 @@ describe('List Rubrics', () => {
     const { rows } = await query<{ account_id: string }>(
       `INSERT INTO account (email, password_hash, role)
        VALUES ($1, 'x', 'RubricDesigner') RETURNING account_id`,
-      [`designer-${new Date()}@test.org`],
+      [`designer-${crypto.randomUUID()}@test.org`],
     )
     designerId = rows[0].account_id
 

@@ -1,4 +1,5 @@
 import api from './api.ts'
+import { getStoredDesignerId } from './session.ts'
 
 export type Rating = '5' | '4' | '3' | '2' | '1'
 
@@ -43,22 +44,30 @@ export const listRubrics = (limit: number, offset: number) =>
 export const getRubric = (rubricId: string) =>
   api.get<Rubric>('/rubric/get', { params: { rubricId } })
 
+// Rubric writes carry the logged-in designer's ID (see session.ts); the server answers 401 without it.
+const designer = () => ({ designerId: getStoredDesignerId() ?? undefined })
+
 export const createRubric = (name: string) =>
-  api.post<{ rubricId: string }>('/rubric/create', { name })
+  api.post<{ rubricId: string }>('/rubric/create', { ...designer(), name })
 
 export const deleteRubric = (rubricId: string) =>
   api.post<{ rubricId: string; deletedAt: string }>('/rubric/delete', {
+    ...designer(),
     rubricId,
   })
 
 export const publishRubric = (rubricId: string) =>
-  api.post<{ publishDate: string }>('/rubric/publish', { rubricId })
+  api.post<{ publishDate: string }>('/rubric/publish', {
+    ...designer(),
+    rubricId,
+  })
 
 export const deprecateRubric = (
   rubricId: string,
   replacementRubricId: string,
 ) =>
   api.post<{ replacementRubricId: string }>('/rubric/deprecate', {
+    ...designer(),
     rubricId,
     replacementRubricId,
   })

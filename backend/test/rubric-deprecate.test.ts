@@ -1,7 +1,7 @@
 import { afterAll, describe, expect, it } from 'vitest'
 import { handler } from '../src/handlers/rubric/deprecate.ts'
 import { closePool, query } from '../src/shared/db.ts'
-import { makeEvent, parse } from './helpers.ts'
+import { makeEvent, parse, testDesignerId } from './helpers.ts'
 
 async function seedRubric(
   publishDate: string | null = '2026-01-01',
@@ -34,7 +34,17 @@ async function readRubric(rubricId: string) {
 }
 
 const deprecate = async (rubricId: unknown, replacementRubricId: unknown) =>
-  parse(await handler(makeEvent({ body: { rubricId, replacementRubricId } })))
+  parse(
+    await handler(
+      makeEvent({
+        body: {
+          designerId: await testDesignerId(),
+          rubricId,
+          replacementRubricId,
+        },
+      }),
+    ),
+  )
 
 describe('Deprecate Rubric', () => {
   it('deprecates a rubric in favour of one published the same day', async () => {
