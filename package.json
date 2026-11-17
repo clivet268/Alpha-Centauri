@@ -23,9 +23,6 @@
     "deploy": "npm run deploy -w infra"
   },
   "devDependencies": {
-    "typescript": "7.0.2"
-  },
-  "dependencies": {
-    "cors": "^2.8.6"
+    "typescript": "~7.0.2"
   }
 }

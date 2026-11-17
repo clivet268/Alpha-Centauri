@@ -1,10 +1,12 @@
-import api from './api.ts'
+import api from './api'
 
-export interface Issue {
-  issue_id: string
-  volume: number
-  number: number
+export interface CreateIssueResponse {
+  issueId: string
 }
 
-export const createIssue = () =>
-  api.post<Issue>('/api/issue/create', { })
+export const createIssue = (
+  journalId: string,
+  volume: number,
+  number: number,
+) =>
+  api.post<CreateIssueResponse>('/issue/create', { journalId, volume, number })

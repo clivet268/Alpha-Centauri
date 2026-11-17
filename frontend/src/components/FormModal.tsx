@@ -1,8 +1,6 @@
-import { type ReactNode, useState } from 'react'
+import { useState, type FormEvent, type ReactNode } from 'react'
+import { ApiError } from '../services/api'
 import Modal from './Modal'
-import { createIssue } from '../services/issue.ts'
-
-
 
 export interface FieldDef {
   name: string
@@ -16,6 +14,9 @@ interface FormModalProps {
   fields: FieldDef[]
   submitLabel?: string
   onClose: () => void
+  // Receives the raw input values keyed by field name. Throw to keep the modal
+  // open and show the error; the caller closes the modal on success.
+  onSubmit?: (values: Record<string, string>) => Promise<void>
   children?: ReactNode
 }
 
@@ -25,66 +26,63 @@ export default function FormModal({
   fields,
   submitLabel = 'Submit',
   onClose,
+  onSubmit,
   children,
 }: FormModalProps) {
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string>()
 
-  const [formData, setFormData] = useState({});
-
-
-  interface Issue {
-    issue_id: string
+  const handleClose = () => {
+    setError(undefined)
+    onClose()
   }
 
-  async function run(): Promise<Issue | undefined> {
-    if (title === "Create Issue") {
-      const { issue_id } = await createIssue(  )
-      return { issue_id }
-    }
-    return undefined;
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
+    if (!onSubmit) return
+    const form = e.currentTarget
+    const values = Object.fromEntries(
+      fields.map((f) => [f.name, String(new FormData(form).get(f.name) ?? '')]),
+    )
+    setSubmitting(true)
+    setError(undefined)
     try {
-      console.log(await run())
-    } catch (error) {
-      console.error(error)
+      await onSubmit(values)
+      form.reset()
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Something went wrong.')
+    } finally {
+      setSubmitting(false)
     }
-
-
   }
 
   return (
-    <Modal open={open} title={title} onClose={onClose}>
+    <Modal open={open} title={title} onClose={handleClose}>
       {children}
       <form onSubmit={handleSubmit}>
         {fields.map((f) => (
           <div className="field" key={f.name}>
-            <label htmlFor={`field-${f.name}`} >{f.label}:</label>
+            <label htmlFor={`field-${f.name}`}>{f.label}:</label>
             <input
               id={`field-${f.name}`}
               name={f.name}
               type={f.type ?? 'text'}
               required
-              value={formData[f.name]}
-              onChange={handleChange}
             />
           </div>
         ))}
+        {error && (
+          <p className="error-text" role="alert">
+            {error}
+          </p>
+        )}
         <div className="actions">
-          <button type="button" onClick={onClose}>
+          <button type="button" onClick={handleClose}>
             Cancel
           </button>
-          <button type="submit">{submitLabel}</button>
+          <button type="submit" disabled={submitting}>
+            {submitting ? 'Submitting...' : submitLabel}
+          </button>
         </div>
       </form>
     </Modal>
