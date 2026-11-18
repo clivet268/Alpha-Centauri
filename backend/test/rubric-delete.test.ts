@@ -1,7 +1,7 @@
 import { afterAll, describe, expect, it } from 'vitest'
 import { handler } from '../src/handlers/rubric/delete.ts'
 import { closePool, query } from '../src/shared/db.ts'
-import { makeEvent, parse } from './helpers.ts'
+import { makeEvent, parse, testDesignerId } from './helpers.ts'
 
 async function seedRubric(publishDate: string | null = null): Promise<string> {
   const { rows: accounts } = await query<{ account_id: string }>(
@@ -28,8 +28,12 @@ async function rubricExists(rubricId: string): Promise<boolean> {
   return rows.length === 1
 }
 
-const remove = async (body: unknown) =>
-  parse(await handler(makeEvent({ body })))
+const remove = async (body: object) =>
+  parse(
+    await handler(
+      makeEvent({ body: { designerId: await testDesignerId(), ...body } }),
+    ),
+  )
 
 describe('Delete Rubric', () => {
   it('deletes an unpublished rubric and its questions', async () => {

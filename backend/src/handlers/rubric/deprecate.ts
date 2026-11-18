@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { transaction } from '../../shared/db.ts'
+import { requireDesigner } from '../../shared/designer.ts'
 import {
   conflict,
   handle,
@@ -9,6 +10,7 @@ import {
 } from '../../shared/http.ts'
 
 const Body = z.object({
+  designerId: z.string().optional(),
   rubricId: z.string().startsWith('rb_'),
   replacementRubricId: z.string().startsWith('rb_'),
 })
@@ -22,13 +24,18 @@ export interface DeprecateRubricResponse {
 
 export const handler = handle(
   async (event): Promise<DeprecateRubricResponse> => {
-    const { rubricId, replacementRubricId } = parseBody(event, Body)
+    const { designerId, rubricId, replacementRubricId } = parseBody(
+      event,
+      Body,
+    )
 
     if (rubricId === replacementRubricId) {
       throw invalidInput('replacementRubricId must be a different rubric.')
     }
 
     return transaction(async (client) => {
+      await requireDesigner(client, designerId)
+
       const { rows } = await client.query<{
         rubric_id: string
         state: string

@@ -5,6 +5,8 @@ export const routes = {
   'POST /rubric/deprecate': 'rubric/deprecate',
   'GET /rubric/get': 'rubric/get',
   'GET /rubric/list': 'rubric/list',
+  'POST /designer/register': 'designer/register',
+  'POST /designer/login': 'designer/login',
   'GET /journal/dashboard': 'journal/dashboard',
   'POST /journal/register': 'journal/register',
   'POST /journal/login': 'journal/login',
