@@ -24,7 +24,12 @@ export interface GetRubricResponse {
 
 export const handler = handle(async (event): Promise<GetRubricResponse> => {
   const { rubricId } = parseQuery(event, Query)
+  const rubric = await loadRubric(rubricId)
+  if (!rubric) throw notFound('Rubric not found.')
+  return rubric
+})
 
+export async function loadRubric(rubricId: string): Promise<GetRubricResponse | null> {
   const { rows } = await query<{
     name: string
     state: string
@@ -40,7 +45,7 @@ export const handler = handle(async (event): Promise<GetRubricResponse> => {
   )
 
   const rubric = rows[0]
-  if (!rubric) throw notFound('Rubric not found.')
+  if (!rubric) return null
 
   const { rows: questions } = await query<{
     question_id: string
@@ -71,4 +76,4 @@ export const handler = handle(async (event): Promise<GetRubricResponse> => {
       explanations: q.explanations,
     })),
   }
-})
+}

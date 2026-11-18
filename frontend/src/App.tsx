@@ -19,8 +19,11 @@ export default function App() {
       <Route path="/designer/login" element={<DesignerAuthPage />} />
       <Route path="/designer/rubric" element={<RubricList />} />
       <Route path="/designer/rubric/new" element={<NewRubricPage />} />
-      <Route path="/designer/rubric/view" element={<RubricViewPage />} />
       <Route path="/designer/rubric/:rubricId" element={<RubricEditorPage />} />
+      <Route
+        path="/designer/rubric/:rubricId/view"
+        element={<RubricViewPage />}
+      />
 
       <Route path="/editor/login" element={<EditorAuthPage />} />
       <Route path="/editor/dashboard" element={<EditorDashboardPage />} />

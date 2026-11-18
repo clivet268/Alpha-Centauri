@@ -3,14 +3,9 @@ import { Link, useNavigate, useParams } from 'react-router'
 import RubricTable from '../../components/RubricTable'
 import ScoreSummary from '../../components/ScoreSummary'
 import { ApiError } from '../../services/api'
-import {
-  duplicateRubric,
-  getRubric,
-  type Rating as ApiRating,
-  type Rubric,
-} from '../../services/rubrics'
-import { RATINGS, type Question } from '../../types'
+import { duplicateRubric, getRubric, type Rubric } from '../../services/rubrics'
 import RubricActionDialog, { type RubricAction } from './RubricActionDialog'
+import { tableQuestions } from './tableQuestions'
 
 const MAX_RATING = 5
 
@@ -24,20 +19,6 @@ function errorMessage(err: unknown): string {
   return err.status === 404 || err.status === 400
     ? 'Rubric not found.'
     : err.message
-}
-
-function tableQuestions(rubric: Rubric): Question[] {
-  return rubric.questions.map((q, position) => ({
-    questionId: q.questionId,
-    rubricId: rubric.rubricId,
-    section: q.section as Question['section'],
-    position,
-    text: q.text,
-    explanations: RATINGS.map(
-      (rating) => q.explanations[String(rating) as ApiRating],
-    ),
-    updatedAt: '',
-  }))
 }
 
 export default function RubricEditorPage() {
@@ -146,7 +127,16 @@ export default function RubricEditorPage() {
         >
           Deprecate Current Rubric
         </button>
-        <button type="button" onClick={() => navigate('/designer/rubric/view')}>
+        <button
+          type="button"
+          disabled={rubric.state !== 'Published'}
+          title={
+            rubric.state === 'Published'
+              ? undefined
+              : 'Only published rubrics can be viewed'
+          }
+          onClick={() => navigate(`/designer/rubric/${rubric.rubricId}/view`)}
+        >
           View Rubric (Read-only)
         </button>
         {/* auth on important actions? if im reading the payloads right -268 */}

@@ -49,6 +49,9 @@ export const listRubrics = (
 export const getRubric = (rubricId: string) =>
   api.get<Rubric>('/rubric/get', { params: { rubricId } })
 
+export const viewRubric = (rubricId: string) =>
+  api.get<Rubric>('/rubric/view', { params: { rubricId } })
+
 const designer = () => ({ designerId: getStoredDesignerId() ?? undefined })
 
 export const createRubric = (name: string) =>

@@ -112,6 +112,7 @@ function RubricList() {
               <th scope="col">State</th>
               <th scope="col">Publish Date</th>
               <th scope="col">Questions</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -130,11 +131,18 @@ function RubricList() {
                 </td>
                 <td>{rubric.publishDate ?? 'Not published'}</td>
                 <td>{rubric.questionCount}</td>
+                <td className="row-actions">
+                  {rubric.state === 'Published' && (
+                    <Link to={`/designer/rubric/${rubric.rubricId}/view`}>
+                      View
+                    </Link>
+                  )}
+                </td>
               </tr>
             ))}
             {rubrics.length === 0 && (
               <tr>
-                <td colSpan={5}>
+                <td colSpan={6}>
                   {stateFilter === 'All'
                     ? 'No rubrics.'
                     : `No ${stateFilter.toLowerCase()} rubrics.`}

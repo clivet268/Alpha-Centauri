@@ -6,6 +6,7 @@ export const routes = {
   'POST /rubric/duplicate': 'rubric/duplicate',
   'GET /rubric/get': 'rubric/get',
   'GET /rubric/list': 'rubric/list',
+  'GET /rubric/view': 'rubric/view',
   'POST /designer/register': 'designer/register',
   'POST /designer/login': 'designer/login',
   'GET /journal/dashboard': 'journal/dashboard',
