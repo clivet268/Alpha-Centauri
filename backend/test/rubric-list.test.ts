@@ -49,7 +49,7 @@ describe('List Rubrics', () => {
   })
 
   it('lists rubrics newest first with state and question counts', async () => {
-    const r = await list({ limit: '2' })
+    const r = await list({ limit: '2', state: 'All' })
 
     expect(r.status).toBe(200)
     expect(r.body.rubrics).toEqual([
@@ -71,15 +71,19 @@ describe('List Rubrics', () => {
   })
 
   it('lists unpublished rubrics last', async () => {
-    const { body } = await list({ limit: '1' })
+    const { body } = await list({ limit: '1', state: 'All' })
 
-    const r = await list({ limit: '1', offset: String(body.page.totalCount - 1) })
+    const r = await list({
+      limit: '1',
+      offset: String(body.page.totalCount - 1),
+      state: 'All',
+    })
 
     expect(r.body.rubrics[0]).toMatchObject({ state: 'Unpublished', publishDate: null })
   })
 
   it('pages with limit and offset', async () => {
-    const r = await list({ limit: '1', offset: '1' })
+    const r = await list({ limit: '1', offset: '1', state: 'All' })
 
     expect(r.body.rubrics[0].rubricId).toBe(older)
     expect(r.body.page).toMatchObject({ limit: 1, offset: 1 })

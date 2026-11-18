@@ -12,10 +12,7 @@ const ROLES: Role[] = [
     title: 'Rubric Designer',
     description: 'Create, publish and manage review rubrics.',
     primary: { label: 'Open rubrics', to: '/designer/rubric' },
-    links: [
-      { label: 'Sign in', to: '/designer/login' },
-      { label: 'Rubric view', to: '/designer/rubric/view' },
-    ],
+    links: [{ label: 'Sign in', to: '/designer/login' }],
   },
   {
     title: 'Journal Editor',
