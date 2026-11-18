@@ -5,6 +5,7 @@ import { handle, parseQuery } from '../../shared/http.ts'
 const Query = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(20),
   offset: z.coerce.number().int().min(0).default(0),
+  state: z.enum(['Published', 'Unpublished', 'Deprecated', 'All']).default('All'),
 })
 
 export interface ListRubricsResponse {
@@ -23,9 +24,10 @@ export interface ListRubricsResponse {
 }
 
 export const handler = handle(async (event): Promise<ListRubricsResponse> => {
-  const { limit, offset } = parseQuery(event, Query)
+  const { limit, offset, state } = parseQuery(event, Query)
+  // NULL matches every state ('All').
+  const stateParam = state === 'All' ? null : state
 
-  // Lists every state for now; RD-10 (BR-06) limits this to published rubrics.
   const { rows } = await query<{
     rubric_id: string
     name: string
@@ -37,14 +39,16 @@ export const handler = handle(async (event): Promise<ListRubricsResponse> => {
             count(q.question_id)::int AS question_count
      FROM rubric r
      LEFT JOIN question q ON q.rubric_id = r.rubric_id
+     WHERE $3::text IS NULL OR r.state::text = $3
      GROUP BY r.rubric_id
      ORDER BY r.publish_date DESC NULLS LAST, r.rubric_id
      LIMIT $1 OFFSET $2`,
-    [limit, offset],
+    [limit, offset, stateParam],
   )
 
   const { rows: totals } = await query<{ total_count: number }>(
-    `SELECT count(*)::int AS total_count FROM rubric`,
+    `SELECT count(*)::int AS total_count FROM rubric WHERE $1::text IS NULL OR state::text = $1`,
+    [stateParam],
   )
 
   return {

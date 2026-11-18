@@ -1,9 +1,26 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
 import { ApiError } from '../../services/api.ts'
-import { listRubrics, type RubricPage } from '../../services/rubrics.ts'
+import {
+  listRubrics,
+  type RubricPage,
+  type RubricStateFilter as StateFilter,
+} from '../../services/rubrics.ts'
 
 const PAGE_SIZE = 20
+
+const STATE_FILTERS: StateFilter[] = [
+  'Published',
+  'Unpublished',
+  'Deprecated',
+  'All',
+]
+
+const DEFAULT_FILTER: StateFilter = 'Published'
+
+function parseFilter(value: string | null): StateFilter {
+  return STATE_FILTERS.find((f) => f === value) ?? DEFAULT_FILTER
+}
 
 type Load =
   | { status: 'loading' }
@@ -21,21 +38,26 @@ function RubricList() {
   const currentPage =
     Number.isInteger(requested) && requested >= 1 ? requested : 1
   const offset = (currentPage - 1) * PAGE_SIZE
+  const stateFilter = parseFilter(searchParams.get('state'))
 
-  const [result, setResult] = useState<{ offset: number; load: Load }>()
-  const load: Load =
-    result?.offset === offset ? result.load : { status: 'loading' }
+  const goTo = (page: number, state: StateFilter = stateFilter) =>
+    setSearchParams({ page: String(page), state })
+
+  const key = `${offset}|${stateFilter}`
+  const [result, setResult] = useState<{ key: string; load: Load }>()
+  const load: Load = result?.key === key ? result.load : { status: 'loading' }
 
   useEffect(() => {
     let stale = false
-    listRubrics(PAGE_SIZE, offset)
+    const key = `${offset}|${stateFilter}`
+    listRubrics(PAGE_SIZE, offset, stateFilter)
       .then((data) => {
-        if (!stale) setResult({ offset, load: { status: 'loaded', data } })
+        if (!stale) setResult({ key, load: { status: 'loaded', data } })
       })
       .catch((err: unknown) => {
         if (!stale) {
           setResult({
-            offset,
+            key,
             load: { status: 'error', message: errorMessage(err) },
           })
         }
@@ -43,7 +65,7 @@ function RubricList() {
     return () => {
       stale = true
     }
-  }, [offset])
+  }, [offset, stateFilter])
 
   if (load.status === 'loading') {
     return <p className="rubric-editor-status">Loading rubrics...</p>
@@ -67,7 +89,20 @@ function RubricList() {
       </button>{' '}
       <button type="button" onClick={() => navigate('/designer/rubric/new')}>
         Create New Rubric
-      </button>
+      </button>{' '}
+      <label>
+        Status:{' '}
+        <select
+          value={stateFilter}
+          onChange={(e) => goTo(1, parseFilter(e.target.value))}
+        >
+          {STATE_FILTERS.map((f) => (
+            <option key={f} value={f}>
+              {f}
+            </option>
+          ))}
+        </select>
+      </label>
       <div className="table-scroll">
         <table>
           <thead>
@@ -99,18 +134,21 @@ function RubricList() {
             ))}
             {rubrics.length === 0 && (
               <tr>
-                <td colSpan={5}>No rubrics.</td>
+                <td colSpan={5}>
+                  {stateFilter === 'All'
+                    ? 'No rubrics.'
+                    : `No ${stateFilter.toLowerCase()} rubrics.`}
+                </td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-
       <div className="pagination">
         <button
           type="button"
           disabled={currentPage <= 1}
-          onClick={() => setSearchParams({ page: String(currentPage - 1) })}
+          onClick={() => goTo(currentPage - 1)}
         >
           Previous
         </button>
@@ -120,7 +158,7 @@ function RubricList() {
         <button
           type="button"
           disabled={currentPage >= totalPages}
-          onClick={() => setSearchParams({ page: String(currentPage + 1) })}
+          onClick={() => goTo(currentPage + 1)}
         >
           Next
         </button>

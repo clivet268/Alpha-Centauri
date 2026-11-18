@@ -38,8 +38,13 @@ export interface RubricPage {
   }
 }
 
-export const listRubrics = (limit: number, offset: number) =>
-  api.get<RubricPage>('/rubric/list', { params: { limit, offset } })
+export type RubricStateFilter = Rubric['state'] | 'All'
+
+export const listRubrics = (
+  limit: number,
+  offset: number,
+  state: RubricStateFilter = 'Published',
+) => api.get<RubricPage>('/rubric/list', { params: { limit, offset, state } })
 
 export const getRubric = (rubricId: string) =>
   api.get<Rubric>('/rubric/get', { params: { rubricId } })
