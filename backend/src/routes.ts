@@ -3,6 +3,7 @@ export const routes = {
   'POST /rubric/delete': 'rubric/delete',
   'POST /rubric/publish': 'rubric/publish',
   'POST /rubric/deprecate': 'rubric/deprecate',
+  'POST /rubric/duplicate': 'rubric/duplicate',
   'GET /rubric/get': 'rubric/get',
   'GET /rubric/list': 'rubric/list',
   'POST /designer/register': 'designer/register',
