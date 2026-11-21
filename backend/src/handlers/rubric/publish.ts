@@ -1,10 +1,12 @@
 import { z } from 'zod'
 import { transaction } from '../../shared/db.ts'
+import { requireDesigner } from '../../shared/designer.ts'
 import { conflict, handle, notFound, parseBody } from '../../shared/http.ts'
 
 const SECTION_COUNT = 5
 
 const Body = z.object({
+  designerId: z.string().optional(),
   rubricId: z.string().startsWith('rb_'),
 })
 
@@ -13,9 +15,11 @@ export interface PublishRubricResponse {
 }
 
 export const handler = handle(async (event): Promise<PublishRubricResponse> => {
-  const { rubricId } = parseBody(event, Body)
+  const { designerId, rubricId } = parseBody(event, Body)
 
   return transaction(async (client) => {
+    await requireDesigner(client, designerId)
+
     const { rows } = await client.query<{
       state: string
       low_threshold: number | null

@@ -62,6 +62,9 @@ function RubricList() {
   return (
     <div className="rubric-list">
       <h1>Rubrics</h1>
+      <button type="button" onClick={() => navigate('/')}>
+        Back to Home
+      </button>{' '}
       <button type="button" onClick={() => navigate('/designer/rubric/new')}>
         Create New Rubric
       </button>

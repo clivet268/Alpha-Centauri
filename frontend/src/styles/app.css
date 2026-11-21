@@ -118,27 +118,104 @@ button.warning {
   text-align: center;
 }
 
-.home-links {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  padding: 40px;
+.home {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 72px 16px;
+  background: linear-gradient(180deg, #eef4fb 0%, #f7f9fc 100%);
 }
 
-.home-links a {
-  display: block;
-  width: 240px;
-  padding: 30px;
+.home-header {
   text-align: center;
-  font-size: 22px;
-  background: #d1d1f0;
-  border-radius: 10px;
-  color: #226688;
+  margin-bottom: 48px;
+}
+
+.home-header h1 {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #16324f;
+}
+
+.home-header p {
+  margin: 8px 0 0;
+  font-size: 17px;
+  color: #5b6b7d;
+}
+
+.home-roles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.home-card {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  background: #fff;
+  border: 1px solid #e3e9f0;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(22, 50, 79, 0.06);
+  transition:
+    box-shadow 0.15s,
+    transform 0.15s;
+}
+
+.home-card:hover {
+  box-shadow: 0 8px 24px rgba(22, 50, 79, 0.1);
+  transform: translateY(-2px);
+}
+
+.home-card h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #16324f;
+}
+
+.home-card p {
+  flex: 1;
+  margin: 8px 0 24px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #5b6b7d;
+}
+
+.home-primary {
+  display: block;
+  padding: 11px 16px;
+  text-align: center;
+  font-weight: 600;
+  color: #fff;
+  background: #226688;
+  border-radius: 8px;
   text-decoration: none;
 }
 
-.home-links a:hover {
-  background: #c2c2ea;
+.home-primary:hover {
+  background: #1a5270;
+}
+
+.home-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 16px;
+  margin-top: 14px;
+  font-size: 14px;
+}
+
+.home-secondary a {
+  color: #5b6b7d;
+  text-decoration: none;
+}
+
+.home-secondary a:hover {
+  color: #226688;
+  text-decoration: underline;
 }
 
 .authspace {
@@ -473,12 +550,6 @@ button.warning {
   border-radius: 5px;
   padding: 6px 10px;
   margin: 4px 0 10px 0;
-}
-
-.home-links > div {
-  display: grid;
-  gap: 12px;
-  align-content: start;
 }
 
 .rubric-editor-status {

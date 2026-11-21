@@ -1,56 +1,55 @@
+import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router'
 import RubricTable from '../../components/RubricTable'
-import ScoreSummary from '../../components/ScoreSummary'
-import { SAMPLE_VIEW_URL, sampleQuestions } from '../../data/sampleData'
+import { createRubric } from '../../services/rubrics'
 
 export default function NewRubricPage() {
   const navigate = useNavigate()
+  const [name, setName] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState<string>()
+
+  async function submit(event: FormEvent) {
+    event.preventDefault()
+    setBusy(true)
+    setError(undefined)
+    try {
+      const { rubricId } = await createRubric(name.trim())
+      navigate(`/designer/rubric/${rubricId}`)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not create rubric.')
+      setBusy(false)
+    }
+  }
 
   return (
     <div className="page">
-      <div className="control-bar">
+      <form className="control-bar" onSubmit={submit}>
         <button type="button" onClick={() => navigate('/designer/rubric')}>
           Back to Rubrics
         </button>
-        <div
+        <input
           className="title-input spacer"
-          contentEditable
-          suppressContentEditableWarning
-        >
-          Click To Edit Rubric Title
-        </div>
-      </div>
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          placeholder="Enter Rubric Name"
+          aria-label="Rubric name"
+          maxLength={200}
+          required
+          autoFocus
+        />
+        <button type="submit" disabled={busy || !name.trim()}>
+          {busy ? 'Creating...' : 'Create Rubric'}
+        </button>
+      </form>
 
-      <RubricTable
-        mode="edit"
-        questions={sampleQuestions}
-        viewUrl={SAMPLE_VIEW_URL}
-      />
-      <ScoreSummary
-        label="Maximum Possible Score"
-        value="70"
-        legend={
-          <>
-            High &gt;={' '}
-            <span
-              className="editable"
-              contentEditable
-              suppressContentEditableWarning
-            >
-              55
-            </span>{' '}
-            &nbsp; Low &lt;{' '}
-            <span
-              className="editable"
-              contentEditable
-              suppressContentEditableWarning
-            >
-              40
-            </span>{' '}
-            &nbsp; (in between = moderate)
-          </>
-        }
-      />
+      {error && (
+        <div className="error-text" role="alert">
+          {error}
+        </div>
+      )}
+
+      <RubricTable mode="view" questions={[]} viewUrl="" />
     </div>
   )
 }

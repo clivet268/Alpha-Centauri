@@ -1,12 +1,25 @@
 import { useState, type FormEvent } from 'react'
 import Dialog from '../../components/Dialog.tsx'
 import {
+  deleteRubric,
   deprecateRubric,
   publishRubric,
   type Rubric,
 } from '../../services/rubrics.ts'
 
-export type RubricAction = 'publish' | 'deprecate'
+export type RubricAction = 'publish' | 'deprecate' | 'delete'
+
+const TITLES: Record<RubricAction, string> = {
+  publish: 'Publish rubric',
+  deprecate: 'Deprecate rubric',
+  delete: 'Delete rubric',
+}
+
+const SUBMIT_LABELS: Record<RubricAction, string> = {
+  publish: 'Publish',
+  deprecate: 'Deprecate',
+  delete: 'Delete',
+}
 
 interface Props {
   rubric: Rubric
@@ -19,12 +32,14 @@ function RubricActionDialog({ rubric, action, onDone, onCancel }: Props) {
   const [replacementRubricId, setReplacementRubricId] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string>()
-  const isPublish = action === 'publish'
-
   async function run(): Promise<Partial<Rubric>> {
-    if (isPublish) {
+    if (action === 'publish') {
       const { publishDate } = await publishRubric(rubric.rubricId)
       return { state: 'Published', publishDate }
+    }
+    if (action === 'delete') {
+      await deleteRubric(rubric.rubricId)
+      return {}
     }
     const replacement = replacementRubricId.trim()
     if (replacement === rubric.rubricId) {
@@ -48,18 +63,25 @@ function RubricActionDialog({ rubric, action, onDone, onCancel }: Props) {
 
   return (
     <Dialog
-      title={isPublish ? 'Publish rubric' : 'Deprecate rubric'}
+      title={TITLES[action]}
       onClose={() => {
         if (!busy) onCancel()
       }}
     >
       <form onSubmit={submit}>
-        {isPublish ? (
+        {action === 'publish' && (
           <p>
             Publish "{rubric.name}”? Published rubrics cannot be edited or
             deleted.
           </p>
-        ) : (
+        )}
+        {action === 'delete' && (
+          <p>
+            Delete "{rubric.name}” ({rubric.rubricId}) and all its questions?
+            This cannot be undone.
+          </p>
+        )}
+        {action === 'deprecate' && (
           <>
             <p>
               Deprecate "{rubric.name}”? Users will be told to use the
@@ -86,8 +108,12 @@ function RubricActionDialog({ rubric, action, onDone, onCancel }: Props) {
           <button type="button" onClick={onCancel} disabled={busy}>
             Cancel
           </button>
-          <button type="submit" disabled={busy}>
-            {isPublish ? 'Publish' : 'Deprecate'}
+          <button
+            type="submit"
+            className={action === 'delete' ? 'danger' : undefined}
+            disabled={busy}
+          >
+            {SUBMIT_LABELS[action]}
           </button>
         </div>
       </form>

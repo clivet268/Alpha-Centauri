@@ -29,7 +29,7 @@ export default function EditorAuthPage() {
 
   return (
     <RegisterLoginPage
-      title="Rubric Designer Auth"
+      title="Journal Editor Auth"
       onRegister={onRegister}
       onLogin={onLogin}
     />

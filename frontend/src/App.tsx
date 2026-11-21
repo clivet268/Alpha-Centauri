@@ -29,6 +29,8 @@ export default function App() {
       <Route path="/review" element={<ReviewerAccessPage />} />
       <Route path="/review/rubric" element={<ReviewerReviewPage />} />
 
+      <Route path="/r/:reviewToken" element={<ReviewerAccessPage />} />
+
       <Route path="*" element={<HomePage />} />
     </Routes>
   )

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 import { ApiError } from '../services/api'
 import { AuthCard } from './AuthForms'
 import {
@@ -7,19 +8,31 @@ import {
   PASSWORD_FIELD,
   RUBRIC_ID_FIELD,
 } from './authFields'
+import type { AuthField } from './authFields'
 import TitleBar from './TitleBar'
 
 interface RegisterLoginPageProps {
   title: string
+  // Defaults to the journal editor's register form.
+  registerFields?: AuthField[]
   onRegister?: (values: Record<string, string>) => Promise<void>
   onLogin?: (values: Record<string, string>) => Promise<void>
 }
 
+const JOURNAL_REGISTER_FIELDS = [
+  JOURNAL_NAME_FIELD,
+  RUBRIC_ID_FIELD,
+  EMAIL_FIELD,
+  PASSWORD_FIELD,
+]
+
 export default function RegisterLoginPage({
   title,
+  registerFields = JOURNAL_REGISTER_FIELDS,
   onRegister,
   onLogin,
 }: RegisterLoginPageProps) {
+  const navigate = useNavigate()
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string>()
   const [loginBusy, setLoginBusy] = useState(false)
@@ -55,17 +68,19 @@ export default function RegisterLoginPage({
 
   return (
     <div className="page">
-      <TitleBar title={title} />
+      <TitleBar
+        title={title}
+        left={
+          <button type="button" onClick={() => navigate('/')}>
+            Back to Home
+          </button>
+        }
+      />
       <div className="authspace">
         <div className="auth">
           <AuthCard
             heading="Register"
-            fields={[
-              JOURNAL_NAME_FIELD,
-              RUBRIC_ID_FIELD,
-              EMAIL_FIELD,
-              PASSWORD_FIELD,
-            ]}
+            fields={registerFields}
             submitLabel="Authenticate"
             onSubmit={onRegister ? handleRegister : undefined}
             error={error}

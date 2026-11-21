@@ -13,13 +13,18 @@ describe('Create Rubric', () => {
     const { rows } = await query<{ account_id: string }>(
       `INSERT INTO account (email, password_hash, role)
        VALUES ($1, 'x', 'RubricDesigner') RETURNING account_id`,
-      [`designer-${Date.now()}@test.org`],
+      [`designer-${crypto.randomUUID()}@test.org`],
     )
     const r = parse(
       await handler(makeEvent({ body: { designerId: rows[0].account_id, name: 'Sample' } })),
     )
     expect(r.status).toBe(200)
     expect(r.body.rubricId).toMatch(/^rb_/)
+  })
+
+  it('401 without a designer', async () => {
+    const r = parse(await handler(makeEvent({ body: { name: 'Sample' } })))
+    expect(r.status).toBe(401)
   })
 
   afterAll(closePool)

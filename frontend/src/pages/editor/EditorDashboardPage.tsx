@@ -196,6 +196,9 @@ export default function EditorDashboardPage() {
       <TitleBar
         left={
           <>
+            <button type="button" onClick={() => navigate('/')}>
+              Back to Home
+            </button>
             <span>{journal.name}</span>
             <span>{journal.journalId}</span>
           </>
