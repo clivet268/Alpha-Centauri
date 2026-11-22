@@ -48,7 +48,11 @@ export interface Dashboard {
   page: { limit: number; offset: number; totalCount: number }
 }
 
-export const getDashboard = (journalId: string, limit: number, offset: number) =>
+export const getDashboard = (
+  journalId: string,
+  limit: number,
+  offset: number,
+) =>
   api.get<Dashboard>('/journal/dashboard', {
     params: { journalId, limit, offset },
   })

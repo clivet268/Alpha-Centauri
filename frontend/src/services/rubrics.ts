@@ -38,13 +38,20 @@ export interface RubricPage {
   }
 }
 
-export const listRubrics = (limit: number, offset: number) =>
-  api.get<RubricPage>('/rubric/list', { params: { limit, offset } })
+export type RubricStateFilter = Rubric['state'] | 'All'
+
+export const listRubrics = (
+  limit: number,
+  offset: number,
+  state: RubricStateFilter = 'Published',
+) => api.get<RubricPage>('/rubric/list', { params: { limit, offset, state } })
 
 export const getRubric = (rubricId: string) =>
   api.get<Rubric>('/rubric/get', { params: { rubricId } })
 
-// Rubric writes carry the logged-in designer's ID (see session.ts); the server answers 401 without it.
+export const viewRubric = (rubricId: string) =>
+  api.get<Rubric>('/rubric/view', { params: { rubricId } })
+
 const designer = () => ({ designerId: getStoredDesignerId() ?? undefined })
 
 export const createRubric = (name: string) =>
@@ -61,6 +68,9 @@ export const publishRubric = (rubricId: string) =>
     ...designer(),
     rubricId,
   })
+
+export const duplicateRubric = (rubricId: string, name?: string) =>
+  api.post<Rubric>('/rubric/duplicate', { ...designer(), rubricId, name })
 
 export const deprecateRubric = (
   rubricId: string,

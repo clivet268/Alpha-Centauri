@@ -3,13 +3,9 @@ import { Link, useNavigate, useParams } from 'react-router'
 import RubricTable from '../../components/RubricTable'
 import ScoreSummary from '../../components/ScoreSummary'
 import { ApiError } from '../../services/api'
-import {
-  getRubric,
-  type Rating as ApiRating,
-  type Rubric,
-} from '../../services/rubrics'
-import { RATINGS, type Question } from '../../types'
+import { duplicateRubric, getRubric, type Rubric } from '../../services/rubrics'
 import RubricActionDialog, { type RubricAction } from './RubricActionDialog'
+import { tableQuestions } from './tableQuestions'
 
 const MAX_RATING = 5
 
@@ -25,25 +21,13 @@ function errorMessage(err: unknown): string {
     : err.message
 }
 
-function tableQuestions(rubric: Rubric): Question[] {
-  return rubric.questions.map((q, position) => ({
-    questionId: q.questionId,
-    rubricId: rubric.rubricId,
-    section: q.section as Question['section'],
-    position,
-    text: q.text,
-    explanations: RATINGS.map(
-      (rating) => q.explanations[String(rating) as ApiRating],
-    ),
-    updatedAt: '',
-  }))
-}
-
 export default function RubricEditorPage() {
   const navigate = useNavigate()
   const { rubricId = '' } = useParams()
   const [result, setResult] = useState<{ rubricId: string; load: Load }>()
   const [action, setAction] = useState<RubricAction>()
+  const [duplicating, setDuplicating] = useState(false)
+  const [duplicateError, setDuplicateError] = useState<string>()
   const load: Load =
     result?.rubricId === rubricId ? result.load : { status: 'loading' }
 
@@ -88,7 +72,26 @@ export default function RubricEditorPage() {
         <button type="button" onClick={() => navigate('/designer/rubric')}>
           Back to Rubrics
         </button>
-        <button type="button">Duplicate Current Rubric</button>
+        <button
+          type="button"
+          disabled={duplicating}
+          onClick={() => {
+            setDuplicating(true)
+            setDuplicateError(undefined)
+            duplicateRubric(rubric.rubricId)
+              .then((copy) => navigate(`/designer/rubric/${copy.rubricId}`))
+              .catch((err: unknown) =>
+                setDuplicateError(
+                  err instanceof ApiError
+                    ? err.message
+                    : 'Could not duplicate rubric.',
+                ),
+              )
+              .finally(() => setDuplicating(false))
+          }}
+        >
+          {duplicating ? 'Duplicating...' : 'Duplicate Current Rubric'}
+        </button>
         <button
           type="button"
           disabled={rubric.state !== 'Unpublished'}
@@ -124,7 +127,16 @@ export default function RubricEditorPage() {
         >
           Deprecate Current Rubric
         </button>
-        <button type="button" onClick={() => navigate('/designer/rubric/view')}>
+        <button
+          type="button"
+          disabled={rubric.state !== 'Published'}
+          title={
+            rubric.state === 'Published'
+              ? undefined
+              : 'Only published rubrics can be viewed'
+          }
+          onClick={() => navigate(`/designer/rubric/${rubric.rubricId}/view`)}
+        >
           View Rubric (Read-only)
         </button>
         {/* auth on important actions? if im reading the payloads right -268 */}
@@ -143,6 +155,11 @@ export default function RubricEditorPage() {
         </button>
       </div>
 
+      {duplicateError && (
+        <div className="readonly-note" role="alert">
+          {duplicateError}
+        </div>
+      )}
       <div className="readonly-note">
         State: {rubric.state}
         {rubric.publishDate && (

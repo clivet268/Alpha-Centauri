@@ -58,9 +58,7 @@ export default function RegisterLoginPage({
     try {
       await onLogin(values)
     } catch (err) {
-      setLoginError(
-        err instanceof ApiError ? err.message : 'Could not log in.',
-      )
+      setLoginError(err instanceof ApiError ? err.message : 'Could not log in.')
     } finally {
       setLoginBusy(false)
     }
