@@ -49,9 +49,7 @@ export default function PaperList({
               <tr
                 key={a.assignmentId}
                 className={cls(a.assignmentId === selectedAssignmentId)}
-                onClick={() =>
-                  onSelectAssignment?.(p.paperId, a.assignmentId)
-                }
+                onClick={() => onSelectAssignment?.(p.paperId, a.assignmentId)}
               >
                 <td className="span-3">{a.assignmentId}</td>
                 <td className="span-3">{a.reviewerEmail}</td>

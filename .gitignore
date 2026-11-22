@@ -25,3 +25,5 @@ cdk.out
 *.njsproj
 *.sln
 *.sw?
+
+demo/
