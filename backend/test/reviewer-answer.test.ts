@@ -1,8 +1,8 @@
 import { afterAll, describe, expect, it } from 'vitest'
-import { handler } from '../src/handlers/reviwer/answer.ts'
+import { handler } from '../src/handlers/reviewer/answer.ts'
 import { closePool } from '../src/shared/db.ts'
 import { makeEvent, parse } from './helpers.ts'
-import { readAnswers, readStatus, saveAnswerRow, seedReview } from './review-helpers.ts'
+import { cleanupReviews, readAnswers, readStatus, saveAnswerRow, seedReview } from './review-helpers.ts'
 
 const answer = async (body: object) => parse(await handler(makeEvent({ body })))
 
@@ -128,5 +128,8 @@ describe('Update Answer', () => {
     ])
   })
 
-  afterAll(closePool)
+  afterAll(async () => {
+    await cleanupReviews()
+    await closePool()
+  })
 })

@@ -88,13 +88,15 @@ export default function ReviewerReviewPage() {
     )
   }
 
-  const completed = review.status === 'Completed'
+  const completedReview = review.status === 'Completed' ? review : null
+  const completed = completedReview !== null
   const { lowThreshold, highThreshold } = review.rubric
   const maxScore = review.rubric.questions.length * 5
-  const liveTotal = answers.reduce((sum, a) => sum + a.rating, 0)
-  const scoreValue = review.status === 'Completed'
-    ? `${review.totalScore} / ${maxScore} - ${review.quality}`
-    : `${liveTotal} / ${maxScore}`
+  // Only saved answers count; a score picked but not yet saved with Update Answer is not included.
+  const savedTotal = answers.reduce((sum, a) => sum + a.rating, 0)
+  const scoreValue = completedReview
+    ? `${completedReview.totalScore} / ${maxScore} - ${completedReview.quality}`
+    : `${savedTotal} / ${maxScore}`
 
   async function handleSaveAnswer(questionId: string, rating: Rating | null, text: string) {
     if (!creds || savingId) return
@@ -119,9 +121,9 @@ export default function ReviewerReviewPage() {
   }
 
   async function copyReport() {
-    if (review?.status !== 'Completed') return
+    if (!completedReview) return
     try {
-      await navigator.clipboard.writeText(review.report)
+      await navigator.clipboard.writeText(completedReview.report)
       setCopied(true)
     } catch {
       setCopied(false) // clipboard blocked; the text is selectable in the box
@@ -160,14 +162,14 @@ export default function ReviewerReviewPage() {
           readOnly={completed}
         />
         <ScoreSummary
-          label={completed ? 'Your Final Score' : 'Your Total Score'}
+          label={completed ? 'Your Final Score' : 'Your Saved Total'}
           value={scoreValue}
           legend={`High >= ${highThreshold ?? '-'}   Low < ${lowThreshold ?? '-'}   (in between = moderate)`}
         />
-        {review.status === 'Completed' && (
+        {completedReview && (
           <div className="questionscontainer">
             <div>Review report (copy this into your review system):</div>
-            <pre style={{ whiteSpace: 'pre-wrap', overflowX: 'auto' }}>{review.report}</pre>
+            <pre className="review-report">{completedReview.report}</pre>
             <button type="button" onClick={copyReport}>
               {copied ? 'Copied' : 'Copy Report'}
             </button>

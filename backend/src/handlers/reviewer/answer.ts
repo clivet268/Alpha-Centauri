@@ -1,22 +1,24 @@
+import { z } from 'zod'
 import { query } from '../../shared/db.ts'
-import { conflict, handle, invalidInput, notFound, parseBody } from '../../shared/http.ts'
-import { LooseBody, authenticate, markInProgress, reviewCredentials } from './_shared.ts'
+import { conflict, handle, notFound } from '../../shared/http.ts'
+import { Credentials, authenticate, markInProgress, parseReviewBody } from './_shared.ts'
+
+const REQUIRED_QUESTION = 'questionId is required.'
+const BAD_RATING = 'rating must be an integer from 1 to 5.'
+const BAD_TEXT = 'text must be between 1 and 2000 characters.'
+
+const Body = Credentials.extend({
+  questionId: z.string({ error: REQUIRED_QUESTION }).min(1, REQUIRED_QUESTION),
+  rating: z.number({ error: BAD_RATING }).int(BAD_RATING).min(1, BAD_RATING).max(5, BAD_RATING),
+  text: z
+    .string({ error: BAD_TEXT })
+    .max(2000, BAD_TEXT)
+    .refine((t) => t.trim().length > 0, BAD_TEXT),
+})
 
 // POST /review/answer  (one answer per call)
 export const handler = handle(async (event) => {
-  const body = parseBody(event, LooseBody)
-  const { reviewToken, pin } = reviewCredentials(body)
-
-  const { questionId, rating, text } = body
-  if (typeof questionId !== 'string' || questionId.length === 0) {
-    throw invalidInput('questionId is required.')
-  }
-  if (typeof rating !== 'number' || !Number.isInteger(rating) || rating < 1 || rating > 5) {
-    throw invalidInput('rating must be an integer from 1 to 5.')
-  }
-  if (typeof text !== 'string' || text.trim().length === 0 || text.length > 2000) {
-    throw invalidInput('text must be between 1 and 2000 characters.')
-  }
+  const { reviewToken, pin, questionId, rating, text } = parseReviewBody(event, Body)
 
   const ctx = await authenticate(reviewToken, pin)
   if (ctx.status === 'Completed') throw conflict('REVIEW_COMPLETED', 'Completed reviews cannot be changed.')

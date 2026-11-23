@@ -1,6 +1,7 @@
 import { query } from '../../shared/db.ts'
-import { handle, parseBody } from '../../shared/http.ts'
-import { LooseBody, authenticate, markInProgress, reviewCredentials, type ReviewContext } from './_shared.ts'
+import { handle } from '../../shared/http.ts'
+import { buildReport } from '../../shared/report.ts'
+import { Credentials, authenticate, markInProgress, parseReviewBody } from './_shared.ts'
 
 interface Rubric {
   name: string
@@ -21,7 +22,7 @@ interface A {
 
 // POST /review/access
 export const handler = handle(async (event) => {
-  const { reviewToken, pin } = reviewCredentials(parseBody(event, LooseBody))
+  const { reviewToken, pin } = parseReviewBody(event, Credentials)
 
   const ctx = await authenticate(reviewToken, pin)
   if (ctx.status === 'UrlIssued') {
@@ -46,8 +47,13 @@ export const handler = handle(async (event) => {
     ),
   ])
   const rubric = rubricRes.rows[0]
-  const questions = questionRes.rows
-  const answers = answerRes.rows
+  const questions = questionRes.rows.map((q) => ({
+    questionId: q.question_id,
+    section: q.section,
+    text: q.text,
+    explanations: orderExplanations(q.explanations),
+  }))
+  const answers = answerRes.rows.map((a) => ({ questionId: a.question_id, rating: a.rating, text: a.text }))
 
   const payload: Record<string, unknown> = {
     status: ctx.status,
@@ -58,21 +64,32 @@ export const handler = handle(async (event) => {
       name: rubric.name,
       lowThreshold: rubric.low_threshold,
       highThreshold: rubric.high_threshold,
-      questions: questions.map((q) => ({
-        questionId: q.question_id,
-        section: q.section,
-        text: q.text,
-        explanations: orderExplanations(q.explanations),
-      })),
+      questions,
     },
-    answers: answers.map((a) => ({ questionId: a.question_id, rating: a.rating, text: a.text })),
+    answers,
   }
 
   if (ctx.status === 'Completed') {
-    payload.completedAt = ctx.completedAt!.toISOString()
+    // The CHECK constraints on assignment guarantee these are set once Completed.
+    const completedAt = ctx.completedAt!
+    payload.completedAt = completedAt.toISOString()
     payload.totalScore = ctx.totalScore
     payload.quality = ctx.quality
-    payload.report = buildReport(ctx, rubric, questions, answers)
+    payload.report = buildReport({
+      paperTitle: ctx.paperTitle,
+      paperReference: ctx.paperReference,
+      journalName: ctx.journalName,
+      volume: ctx.volume,
+      number: ctx.number,
+      rubricName: rubric.name,
+      lowThreshold: rubric.low_threshold,
+      highThreshold: rubric.high_threshold,
+      completedAt,
+      totalScore: ctx.totalScore!,
+      quality: ctx.quality!,
+      questions,
+      answers,
+    })
   }
   return payload
 })
@@ -82,34 +99,4 @@ function orderExplanations(ex: Record<string, string>): Record<string, string> {
   const out: Record<string, string> = {}
   for (const k of ['5', '4', '3', '2', '1']) if (k in ex) out[k] = ex[k]
   return out
-}
-
-// TODO(complete-review): move to shared/ and reuse from /review/complete, which must persist/return the same text.
-// The schema has no report column, so for now it is generated from the data on read.
-function buildReport(ctx: ReviewContext, rubric: Rubric, questions: Q[], answers: A[]): string {
-  const byQ = new Map(answers.map((a) => [a.question_id, a]))
-  const rule = '='.repeat(72)
-  const lines = [
-    rule,
-    'PEER REVIEW REPORT',
-    rule,
-    `Paper:      ${ctx.paperTitle}`,
-    `Reference:  ${ctx.paperReference}`,
-    `Journal:    ${ctx.journalName}, Vol. ${ctx.volume}, No. ${ctx.number}`,
-    `Rubric:     ${rubric.name} (low < ${rubric.low_threshold}, high > ${rubric.high_threshold})`,
-    `Completed:  ${ctx.completedAt!.toISOString()}`,
-    `Score:      ${ctx.totalScore}`,
-    `Quality:    ${ctx.quality}`,
-    rule,
-  ]
-  questions.forEach((q, i) => {
-    const a = byQ.get(q.question_id)
-    lines.push(
-      `Q${i + 1} [Section ${q.section}] ${q.text}`,
-      `    Rating: ${a ? `${a.rating}/5` : 'n/a'}`,
-      `    Comment: ${a ? a.text : ''}`,
-      '',
-    )
-  })
-  return lines.join('\n')
 }

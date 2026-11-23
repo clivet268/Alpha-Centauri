@@ -1,5 +1,5 @@
 import { afterAll, describe, expect, it } from 'vitest'
-import { handler } from '../src/handlers/reviwer/access.ts'
+import { handler } from '../src/handlers/reviewer/access.ts'
 import { closePool } from '../src/shared/db.ts'
 import { makeEvent, parse } from './helpers.ts'
 import {
@@ -8,6 +8,7 @@ import {
   PAPER_TITLE,
   readStatus,
   saveAnswerRow,
+  cleanupReviews,
   seedReview,
 } from './review-helpers.ts'
 
@@ -15,7 +16,7 @@ const access = async (body: unknown) => parse(await handler(makeEvent({ body }))
 
 describe('Access Rubric', () => {
   it('returns the paper, journal, rubric and saved answers of an in-progress review', async () => {
-    const { reviewToken, pin, assignmentId, questionIds } = await seedReview({ status: 'InProgress' })
+    const { reviewToken, pin, assignmentId, questionIds, deadline } = await seedReview({ status: 'InProgress' })
     await saveAnswerRow(assignmentId, questionIds[0], 4, 'Saved comment')
 
     const r = await access({ reviewToken, pin })
@@ -23,7 +24,7 @@ describe('Access Rubric', () => {
     expect(r.status).toBe(200)
     expect(r.body).toMatchObject({
       status: 'InProgress',
-      deadline: '2026-11-01',
+      deadline,
       paper: { title: PAPER_TITLE, reference: PAPER_REFERENCE },
       journal: { name: JOURNAL_NAME, volume: 12, number: 3 },
       rubric: { name: 'Sample rubric', lowThreshold: 20, highThreshold: 40 },
@@ -118,5 +119,8 @@ describe('Access Rubric', () => {
     }
   })
 
-  afterAll(closePool)
+  afterAll(async () => {
+    await cleanupReviews()
+    await closePool()
+  })
 })

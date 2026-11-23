@@ -16,8 +16,19 @@ export interface SeedReviewOptions {
   journalWithdrawn?: boolean
 }
 
+interface SeededChain {
+  accountIds: string[]
+  rubricId: string
+  journalId: string
+  issueId: string
+  paperId: string
+  assignmentId: string
+}
+const seeded: SeededChain[] = []
+
 // One full chain per call (designer, editor, published rubric, journal, issue, paper, assignment)
 // with random ids/emails/token, so tests never collide with each other or with seed data.
+// Call cleanupReviews() in afterAll to delete everything this file created.
 export async function seedReview({
   status = 'InProgress',
   questions = 2,
@@ -77,10 +88,12 @@ export async function seedReview({
 
   const reviewToken = crypto.randomUUID().replace(/-/g, '').slice(0, 12)
   const completed = status === 'Completed'
-  const { rows: assignments } = await query<{ assignment_id: string }>(
+  // Deadline is always two weeks out, so the seed stays valid whatever day the tests run.
+  const { rows: assignments } = await query<{ assignment_id: string; deadline: string }>(
     `INSERT INTO assignment
        (paper_id, reviewer_email, deadline, status, review_token, pin_hash, completed_at, total_score, quality)
-     VALUES ($1, $2, '2026-11-01', $3, $4, $5, $6, $7, $8) RETURNING assignment_id`,
+     VALUES ($1, $2, current_date + 14, $3, $4, $5, $6, $7, $8)
+     RETURNING assignment_id, to_char(deadline, 'YYYY-MM-DD') AS deadline`,
     [
       papers[0].paper_id,
       `reviewer-${crypto.randomUUID()}@test.org`,
@@ -93,7 +106,30 @@ export async function seedReview({
     ],
   )
 
-  return { reviewToken, pin: REVIEW_PIN, assignmentId: assignments[0].assignment_id, rubricId, questionIds }
+  const assignmentId = assignments[0].assignment_id
+  seeded.push({
+    accountIds: [designerId, editorId],
+    rubricId,
+    journalId: journals[0].journal_id,
+    issueId: issues[0].issue_id,
+    paperId: papers[0].paper_id,
+    assignmentId,
+  })
+
+  return { reviewToken, pin: REVIEW_PIN, assignmentId, rubricId, questionIds, deadline: assignments[0].deadline }
+}
+
+/** Deletes every chain seedReview() created, children first (answers and questions cascade). */
+export async function cleanupReviews() {
+  const chains = seeded.splice(0)
+  if (chains.length === 0) return
+  const ids = (pick: (c: SeededChain) => string) => chains.map(pick)
+  await query(`DELETE FROM assignment WHERE assignment_id = ANY($1)`, [ids((c) => c.assignmentId)])
+  await query(`DELETE FROM paper WHERE paper_id = ANY($1)`, [ids((c) => c.paperId)])
+  await query(`DELETE FROM issue WHERE issue_id = ANY($1)`, [ids((c) => c.issueId)])
+  await query(`DELETE FROM journal WHERE journal_id = ANY($1)`, [ids((c) => c.journalId)])
+  await query(`DELETE FROM rubric WHERE rubric_id = ANY($1)`, [ids((c) => c.rubricId)])
+  await query(`DELETE FROM account WHERE account_id = ANY($1)`, [chains.flatMap((c) => c.accountIds)])
 }
 
 export async function saveAnswerRow(assignmentId: string, questionId: string, rating: number, text: string) {

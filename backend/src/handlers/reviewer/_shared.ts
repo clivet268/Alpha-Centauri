@@ -1,20 +1,27 @@
 import { z } from 'zod'
 import { query } from '../../shared/db.ts'
-import { HttpError, invalidInput, notFound } from '../../shared/http.ts'
+import { HttpError, invalidInput, notFound, parseBody, type Event } from '../../shared/http.ts'
 import { verifyPassword } from '../../shared/password.ts'
+import type { Quality } from '../../shared/report.ts'
 
-// Bodies are validated by hand (not per-field zod) so error messages match the JSON payload contract exactly.
-export const LooseBody = z.record(z.string(), z.unknown())
+const REQUIRED_TOKEN = 'reviewToken is required.'
+const BAD_PIN = 'pin must be a 6-digit string.'
 
-export function reviewCredentials(body: Record<string, unknown>): { reviewToken: string; pin: string } {
-  const { reviewToken, pin } = body
-  if (typeof reviewToken !== 'string' || reviewToken.length === 0) {
-    throw invalidInput('reviewToken is required.')
-  }
-  if (typeof pin !== 'string' || !/^\d{6}$/.test(pin)) {
-    throw invalidInput('pin must be a 6-digit string.')
-  }
-  return { reviewToken, pin }
+export const Credentials = z.object({
+  reviewToken: z.string({ error: REQUIRED_TOKEN }).min(1, REQUIRED_TOKEN),
+  pin: z.string({ error: BAD_PIN }).regex(/^\d{6}$/, BAD_PIN),
+})
+
+const AnyBody = z.record(z.string(), z.unknown())
+
+/**
+ * Like parseBody, but a validation failure reports only the first issue's message, with no
+ * field-path prefix, so the error text matches the JSON payload contract exactly.
+ */
+export function parseReviewBody<T>(event: Event, schema: z.ZodType<T>): T {
+  const result = schema.safeParse(parseBody(event, AnyBody))
+  if (!result.success) throw invalidInput(result.error.issues[0].message)
+  return result.data
 }
 
 export interface ReviewContext {
@@ -23,7 +30,7 @@ export interface ReviewContext {
   deadline: string
   completedAt: Date | null
   totalScore: number | null
-  quality: 'High' | 'Moderate' | 'Low' | null
+  quality: Quality | null
   paperTitle: string
   paperReference: string
   journalName: string
