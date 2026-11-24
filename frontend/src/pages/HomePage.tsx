@@ -18,16 +18,13 @@ const ROLES: Role[] = [
     title: 'Journal Editor',
     description: 'Manage issues, papers and reviewer assignments.',
     primary: { label: 'Open dashboard', to: '/editor/dashboard' },
-    links: [
-      { label: 'Sign in', to: '/editor/login' },
-      { label: 'Read review', to: '/editor/review' },
-    ],
+    links: [{ label: 'Sign in', to: '/editor/login' }],
   },
   {
     title: 'Reviewer',
     description: 'Score a paper using your RubricURL and PIN.',
     primary: { label: 'Access review', to: '/review' },
-    links: [{ label: 'Reviewer review', to: '/review/rubric' }],
+    links: [],
   },
 ]
 
@@ -47,13 +44,15 @@ export default function HomePage() {
             <Link className="home-primary" to={role.primary.to}>
               {role.primary.label} →
             </Link>
-            <nav className="home-secondary">
-              {role.links.map((link) => (
-                <Link key={link.to} to={link.to}>
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
+            {role.links.length > 0 && (
+              <nav className="home-secondary">
+                {role.links.map((link) => (
+                  <Link key={link.to} to={link.to}>
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            )}
           </section>
         ))}
       </div>

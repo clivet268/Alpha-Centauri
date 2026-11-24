@@ -1,5 +1,5 @@
-import { Fragment } from 'react'
-import { RATINGS, type Answer, type Question } from '../types'
+import { Fragment, useState } from 'react'
+import { RATINGS, type Answer, type Question, type Rating } from '../types'
 
 export type RubricTableMode = 'view' | 'edit' | 'answer' | 'review'
 
@@ -19,6 +19,13 @@ interface RubricTableProps {
   onAddQuestion?: (section: number) => void
   onEditQuestion?: (questionId: string) => void
   onDeleteQuestion?: (questionId: string) => void
+  // answer mode only:
+  /** Called when the reviewer presses "Update Answer" on one row. rating is null if none is picked yet. */
+  onSaveAnswer?: (questionId: string, rating: Rating | null, text: string) => void
+  /** Question currently being saved. While set, every Update Answer button is disabled (one update at a time). */
+  savingQuestionId?: string | null
+  /** Completed review: show the answers but allow no changes. */
+  readOnly?: boolean
 }
 
 export default function RubricTable({
@@ -29,6 +36,9 @@ export default function RubricTable({
   onAddQuestion,
   onEditQuestion,
   onDeleteQuestion,
+  onSaveAnswer,
+  savingQuestionId = null,
+  readOnly = false,
 }: RubricTableProps) {
   const hasActionColumn = mode === 'edit' || mode === 'answer'
   let questionNumber = 0
@@ -76,6 +86,9 @@ export default function RubricTable({
                       number={questionNumber}
                       onEdit={onEditQuestion}
                       onDelete={onDeleteQuestion}
+                      onSaveAnswer={onSaveAnswer}
+                      savingQuestionId={savingQuestionId}
+                      readOnly={readOnly}
                     />
                   )
                 })}
@@ -107,6 +120,9 @@ function QuestionRows({
   number,
   onEdit,
   onDelete,
+  onSaveAnswer,
+  savingQuestionId,
+  readOnly,
 }: {
   mode: RubricTableMode
   question: Question
@@ -114,7 +130,13 @@ function QuestionRows({
   number: number
   onEdit?: (questionId: string) => void
   onDelete?: (questionId: string) => void
+  onSaveAnswer?: RubricTableProps['onSaveAnswer']
+  savingQuestionId: string | null
+  readOnly: boolean
 }) {
+  // Draft values for answer mode; only sent to the server when "Update Answer" is pressed.
+  const [rating, setRating] = useState<Rating | null>(answer?.rating ?? null)
+  const [text, setText] = useState(answer?.text ?? '')
   const guidance = q.explanations
     .map((text, i) => (text ? `${RATINGS[i]} = ${text}` : ''))
     .filter(Boolean)
@@ -125,25 +147,27 @@ function QuestionRows({
       <tr>
         <td className="text-cell">{q.text}</td>
 
-        {RATINGS.map((rating) => {
-          const picked = mode === 'review' && answer?.rating === rating
+        {RATINGS.map((r) => {
+          const picked = mode === 'review' && answer?.rating === r
           return (
             <td
-              key={rating}
-              className={`rating-${rating}${picked ? ' picked' : ''}`}
+              key={r}
+              className={`rating-${r}${picked ? ' picked' : ''}`}
             >
               {mode === 'answer' ? (
                 <label className="answercell">
-                  {rating}
+                  {r}
                   <input
                     type="radio"
                     name={`q${number}`}
-                    value={rating}
-                    defaultChecked={answer?.rating === rating}
+                    value={r}
+                    checked={rating === r}
+                    disabled={readOnly}
+                    onChange={() => setRating(r)}
                   />
                 </label>
               ) : (
-                rating
+                r
               )}
             </td>
           )
@@ -177,8 +201,10 @@ function QuestionRows({
               type="button"
               className="rowbutton"
               title="Save my answer for this question"
+              disabled={readOnly || savingQuestionId !== null}
+              onClick={() => onSaveAnswer?.(q.questionId, rating, text)}
             >
-              Update Answer
+              {savingQuestionId === q.questionId ? 'Saving...' : 'Update Answer'}
             </button>
           </td>
         )}
@@ -195,7 +221,9 @@ function QuestionRows({
               name={`c${number}`}
               required
               placeholder="Explain your score"
-              defaultValue={answer?.text}
+              value={text}
+              readOnly={readOnly}
+              onChange={(e) => setText(e.target.value)}
             />
           </td>
         </tr>

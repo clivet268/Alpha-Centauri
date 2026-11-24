@@ -7,7 +7,7 @@ async function makeJournal(): Promise<string> {
   const stamp = `${Date.now()}-${Math.random().toString(36).slice(2)}`
   const { rows: accounts } = await query<{ account_id: string }>(
     `INSERT INTO account (email, password_hash, role)
-     VALUES ($1, 'x', 'RubricDesigner'), ($2, 'x', 'Editor') RETURNING account_id`,
+     VALUES ($1, 'x', 'RubricDesigner'), ($2, 'x', 'JournalEditor') RETURNING account_id`,
     [`designer-${stamp}@test.org`, `editor-${stamp}@test.org`],
   )
   const { rows: rubrics } = await query<{ rubric_id: string }>(
