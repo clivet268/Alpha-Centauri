@@ -32,6 +32,7 @@ Alpha Centauri group project for WPI 509 Design of Software Systems
 | Edit Question | Ryan | ✅ Done |
 | Access Rubric | Clive | ✅ Done |
 | Update Answer | Clive | ✅ Done |
+| Delete Issue | AJ | ✅ Done |
 
 ### Demo Videos
 
