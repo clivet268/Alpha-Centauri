@@ -14,8 +14,8 @@ Alpha Centauri group project for WPI 509 Design of Software Systems
 | Delete Rubric | Ryan | ✅ Done |
 | Register Journal | Clive | ✅ Done |
 | Show Journal Dashboard | Clive | ✅ Done |
-| Create Issue | AJ | ❌ Not done |
-| Add Paper | AJ | ❌ Not done |
+| Create Issue | AJ | ✅ Done |
+| Add Paper | AJ | ✅ Done |
 | Publish Rubric | Lucky | ✅ Done |
 | Deprecate Rubric | Lucky | ✅ Done |
 
@@ -23,10 +23,16 @@ Alpha Centauri group project for WPI 509 Design of Software Systems
 
 | Use Cases | Assigned To | Status |
 | :--- | :---: | ---: |
+| List Rubrics | Lucky | ✅ Done |
+| View Rubric | Lucky | ✅ Done |
+| Duplicate Rubric | Lucky | ✅ Done |
 | Edit Rubric | Ryan | ✅ Done |
 | Add Question | Ryan | ✅ Done |
 | Delete Question | Ryan | ✅ Done |
 | Edit Question | Ryan | ✅ Done |
+| Access Rubric | Clive | ✅ Done |
+| Update Answer | Clive | ✅ Done |
+| Complete Review | Clive | ✅ Done |
 
 ### Demo Videos
 
@@ -36,8 +42,9 @@ Use cases demo videos are in `demo/` directory.
 
 - Homepage - https://dev.dkypn84dd07cn.amplifyapp.com
 - API - https://tu36tsfmjd.execute-api.us-east-2.amazonaws.com/dev
-- Rubric Designer View (after login) - https://dev.dkypn84dd07cn.amplifyapp.com/designer/rubric
+- Rubric Designer View - https://dev.dkypn84dd07cn.amplifyapp.com/designer/rubric
 - Journal Dashboard - https://dev.dkypn84dd07cn.amplifyapp.com/editor/dashboard
+- Reviewer Access - https://dev.dkypn84dd07cn.amplifyapp.com/review
 
 ### Login Credentials
 
@@ -46,6 +53,14 @@ You can either register a new Journal or use the following Login credentials for
 - Email: editor1@journal.com
 - Password: password123
 
+### Reviwer access credentials
+
+| RubricURL token | PIN    | State      |
+| :---            | :---:  | :---       |
+| rvProg000001    | 042817 | InProgress |
+| rvFresh00001    | 135790 | UrlIssued  |
+| rvDone000001    | 246810 | Completed  |
+| rvWdrn000001    | 111111 | Withdrawn  |
 
 ## Local Setup
 

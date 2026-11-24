@@ -15,7 +15,7 @@ export default function ReviewerAccessPage() {
   const [busy, setBusy] = useState(false)
 
   const fields: AuthField[] = [
-    ...(tokenFromRoute ? [] : [{ name: 'rubricUrl', placeholder: 'Enter RubricURL' }]),
+    ...(tokenFromRoute ? [] : [{ name: 'rubricUrl', placeholder: 'Enter RubricURL token' }]),
     { name: 'pin', placeholder: 'Enter PIN', inputMode: 'numeric' },
   ]
 
