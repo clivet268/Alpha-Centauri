@@ -32,7 +32,6 @@ Alpha Centauri group project for WPI 509 Design of Software Systems
 | Edit Question | Ryan | ✅ Done |
 | Access Rubric | Clive | ✅ Done |
 | Update Answer | Clive | ✅ Done |
-| Complete Review | Clive | ✅ Done |
 
 ### Demo Videos
 
@@ -47,6 +46,12 @@ Use cases demo videos are in `demo/` directory.
 - Reviewer Access - https://dev.dkypn84dd07cn.amplifyapp.com/review
 
 ### Login Credentials
+
+You can either register a new Rubric Designer or use the following Login credentials for existing designer:
+
+- Email: designer1@rubric.com
+- Password: password123
+
 
 You can either register a new Journal or use the following Login credentials for existing journal:
 

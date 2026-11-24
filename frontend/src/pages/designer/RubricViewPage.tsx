@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
+import LogoutButton from '../../components/LogoutButton'
 import RubricTable from '../../components/RubricTable'
 import ScoreSummary from '../../components/ScoreSummary'
 import { ApiError } from '../../services/api'
@@ -60,7 +61,10 @@ export default function RubricViewPage() {
   if (load.status === 'error') {
     return (
       <div className="page">
-        <div className="control-bar">{backButton}</div>
+        <div className="control-bar">
+          {backButton}
+          <LogoutButton role="designer" />
+        </div>
         <p className="rubric-editor-status" role="alert">
           {load.message}
         </p>
@@ -75,6 +79,7 @@ export default function RubricViewPage() {
       <div className="control-bar">
         {backButton}
         <div className="spacer title-input">{rubric.name}</div>
+        <LogoutButton role="designer" />
       </div>
 
       <div className="readonly-note">

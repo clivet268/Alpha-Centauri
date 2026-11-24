@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router'
+import LogoutButton from '../../components/LogoutButton'
 import RubricTable from '../../components/RubricTable'
 import { createRubric } from '../../services/rubrics'
 
@@ -41,6 +42,7 @@ export default function NewRubricPage() {
         <button type="submit" disabled={busy || !name.trim()}>
           {busy ? 'Creating...' : 'Create Rubric'}
         </button>
+        <LogoutButton role="designer" />
       </form>
 
       {error && (

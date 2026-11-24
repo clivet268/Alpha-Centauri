@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import ConfirmModal from '../../components/ConfirmModal'
+import LogoutButton from '../../components/LogoutButton'
 import FormModal, { type FieldDef } from '../../components/FormModal'
 import RubricTable from '../../components/RubricTable'
 import ScoreSummary from '../../components/ScoreSummary'
@@ -348,6 +349,7 @@ export default function RubricEditorPage() {
         >
           Delete Current Rubric
         </button>
+        <LogoutButton role="designer" />
       </div>
 
       {duplicateError && (

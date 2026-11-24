@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router'
+import LogoutButton from '../../components/LogoutButton'
 import RubricTable from '../../components/RubricTable'
 import ScoreSummary from '../../components/ScoreSummary'
 import TitleBar from '../../components/TitleBar'
@@ -16,9 +17,15 @@ export default function ReadReviewPage() {
       <TitleBar
         title="Read Review"
         right={
-          <button type="button" onClick={() => navigate('/editor/dashboard')}>
-            Back to Dashboard
-          </button>
+          <>
+            <button
+              type="button"
+              onClick={() => navigate('/editor/dashboard')}
+            >
+              Back to Dashboard
+            </button>
+            <LogoutButton role="editor" />
+          </>
         }
       />
       <div className="infobar">

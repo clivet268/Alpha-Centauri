@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
+import LogoutButton from '../../components/LogoutButton.tsx'
 import { ApiError } from '../../services/api.ts'
 import {
   listRubrics,
@@ -90,6 +91,7 @@ function RubricList() {
       <button type="button" onClick={() => navigate('/designer/rubric/new')}>
         Create New Rubric
       </button>{' '}
+      <LogoutButton role="designer" />{' '}
       <label>
         Status:{' '}
         <select

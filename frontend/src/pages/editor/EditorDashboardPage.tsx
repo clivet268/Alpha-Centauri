@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Navigate, useNavigate, useSearchParams } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import ConfirmModal from '../../components/ConfirmModal'
 import FormModal from '../../components/FormModal'
+import LogoutButton from '../../components/LogoutButton'
 import ListTable from '../../components/ListTable'
 import Modal from '../../components/Modal'
 import RubricTable from '../../components/RubricTable'
@@ -46,7 +47,8 @@ interface Result {
 export default function EditorDashboardPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const journalId = searchParams.get('journalId') ?? getStoredJournalId()
+  // RequireEditor only renders this page when one of these is set.
+  const journalId = (searchParams.get('journalId') ?? getStoredJournalId())!
 
   // Bump to refetch. Call reload() after any action that changes journal data.
   const [reloads, setReloads] = useState(0)
@@ -72,11 +74,10 @@ export default function EditorDashboardPage() {
   const offset = (currentPage - 1) * ISSUES_PER_PAGE
 
   useEffect(() => {
-    if (journalId) setStoredJournalId(journalId)
+    setStoredJournalId(journalId)
   }, [journalId])
 
   useEffect(() => {
-    if (!journalId) return
     getDashboard(journalId, ISSUES_PER_PAGE, offset)
       .then((data) => setResult({ data }))
       .catch((err: unknown) =>
@@ -86,8 +87,6 @@ export default function EditorDashboardPage() {
         }),
       )
   }, [journalId, offset, reloads])
-
-  if (!journalId) return <Navigate to="/editor/login" replace />
 
   if (!data && !error) {
     return <p className="rubric-editor-status">Loading dashboard...</p>
@@ -164,6 +163,7 @@ export default function EditorDashboardPage() {
             <button type="button" className="danger">
               Unregister Current Journal
             </button>
+            <LogoutButton role="editor" />
           </>
         }
       />

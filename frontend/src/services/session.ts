@@ -45,3 +45,11 @@ export function clearStoredJournalId(): void {
     // Nothing to clear.
   }
 }
+
+export function clearStoredDesignerId(): void {
+  try {
+    localStorage.removeItem(DESIGNER_KEY)
+  } catch {
+    // Nothing to clear.
+  }
+}
