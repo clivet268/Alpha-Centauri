@@ -138,8 +138,8 @@ export const handler = handle(async (event): Promise<DashboardResponse> => {
       [journal.rubric_id],
     ),
 
-    // One page of issues, newest first, with papers -> assignments nested.
-    // Withdrawn papers are hidden (a paper can only be withdrawn while it has no reviewers).
+    // One page of issues, newest first, with paper -> assignments nested.
+    // Withdrawn paper are hidden (a paper can only be withdrawn while it has no reviewers).
     query<{
       issue_id: string
       volume: number

@@ -1,5 +1,5 @@
 -- Fills the journal you registered ("Test Journal") with data for every dashboard field.
--- Re-runnable: it clears that journal's issues/papers/assignments first.
+-- Re-runnable: it clears that journal's issues/paper/assignments first.
 -- If you registered under a different journal name, change it in the SELECT below.
 --
 --   docker compose exec -T db psql -U raser -d raser -v ON_ERROR_STOP=1 < backend/scripts/seed-test-journal.sql
@@ -35,7 +35,7 @@ BEGIN
     INSERT INTO issue (journal_id, volume, number) VALUES (jid, 12, n);
   END LOOP;
 
-  -- Issue 12/12: three papers covering every assignment status.
+  -- Issue 12/12: three paper covering every assignment status.
   SELECT issue_id INTO iss FROM issue WHERE journal_id = jid AND volume = 12 AND number = 12;
 
   INSERT INTO paper (issue_id, title, reference)

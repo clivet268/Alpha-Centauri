@@ -16,7 +16,7 @@ const ROLES: Role[] = [
   },
   {
     title: 'Journal Editor',
-    description: 'Manage issues, papers and reviewer assignments.',
+    description: 'Manage issues, paper and reviewer assignments.',
     primary: { label: 'Open dashboard', to: '/editor/dashboard' },
     links: [{ label: 'Sign in', to: '/editor/login' }],
   },

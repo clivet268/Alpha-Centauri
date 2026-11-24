@@ -8,7 +8,8 @@ interface ConfirmModalProps {
   danger?: boolean
   busy?: boolean
   onClose: () => void
-  onConfirm?: () => void
+  onConfirm?: () => void | Promise<void>
+  issueLabel?: string
   children: ReactNode
 }
 

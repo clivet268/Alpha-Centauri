@@ -9,4 +9,11 @@ export const createIssue = (
   volume: number,
   number: number,
 ) =>
-  api.post<CreateIssueResponse>('/issue/create', { journalId, volume, number })
+  api.post<CreateIssueResponse>('/issue/create', { journalId, volume, number });
+
+
+export const deleteIssue = (
+  issueId: string,
+)=> api.delete<CreateIssueResponse>(`/issue/delete`, {
+  data: { issueId }
+});

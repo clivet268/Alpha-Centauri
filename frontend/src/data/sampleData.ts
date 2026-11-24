@@ -130,7 +130,7 @@ export const sampleAssignments: Assignment[] = [
 const RATINGS_GIVEN: Rating[] = [5, 4, 3, 5, 2, 4, 4, 3, 5, 1]
 
 const COMMENTS = [
-  'Cites the main prior work; a few recent papers are missing.',
+  'Cites the main prior work; a few recent paper are missing.',
   'Criterion clearly met.',
   'Sources are well documented.',
   'Supplier details are complete.',

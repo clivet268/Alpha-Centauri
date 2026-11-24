@@ -16,13 +16,17 @@ import {
   type DashboardIssue,
   type DashboardRubric,
 } from '../../services/journals'
-import { createIssue } from '../../services/issue'
+import {
+  createIssue,
+  deleteIssue
+} from '../../services/issue'
 import {
   clearStoredJournalId,
   getStoredJournalId,
   setStoredJournalId,
 } from '../../services/session'
 import PaperList from './PaperList'
+import { addPaper } from '../../services/paper.ts'
 
 const ISSUES_PER_PAGE = 10
 const MAX_RATING = 5
@@ -60,6 +64,7 @@ export default function EditorDashboardPage() {
   const [selectedIssueId, setSelectedIssueId] = useState<string>()
   const [selectedPaperId, setSelectedPaperId] = useState<string>()
   const [selectedAssignmentId, setSelectedAssignmentId] = useState<string>()
+  //const [isDeleting, setIsDeleting] = useState(false)
   const [popup, setPopup] = useState<Popup>(null)
   const close = () => setPopup(null)
 
@@ -134,7 +139,7 @@ export default function EditorDashboardPage() {
   const questions = selectedRubric ? toRubricQuestions(selectedRubric) : []
   const shownPage = Math.floor(page.offset / page.limit) + 1
 
-  const issueLabel = selectedIssue
+  const issueLabel: string = selectedIssue
     ? `${selectedIssue.issueId} (Vol ${selectedIssue.volume}, No ${selectedIssue.number})`
     : '(no issue selected)'
   const paperLabel = selectedPaper
@@ -352,6 +357,12 @@ export default function EditorDashboardPage() {
         confirmLabel="Delete"
         danger
         onClose={close}
+        onConfirm={
+          async ( ) => {
+            await deleteIssue(selectedIssue.issueId)
+            close()
+            reload()
+          }}
       >
         Delete issue {issueLabel}?
       </ConfirmModal>
@@ -363,6 +374,11 @@ export default function EditorDashboardPage() {
           { name: 'paperDoi', label: 'DOI / URL' },
         ]}
         onClose={close}
+        onSubmit ={async ({ paperTitle, paperDoi }) => {
+          await addPaper(selectedIssue.issueId, String(paperTitle), String(paperDoi))
+          close()
+          reload()
+        }}
       />
       <ConfirmModal
         open={popup === 'withdrawPaper'}
@@ -370,6 +386,7 @@ export default function EditorDashboardPage() {
         confirmLabel="Withdraw"
         danger
         onClose={close}
+        onConfirm={close}
       >
         Withdraw paper {paperLabel}?
       </ConfirmModal>
@@ -378,6 +395,7 @@ export default function EditorDashboardPage() {
         title="Close Paper"
         confirmLabel="Close Paper"
         onClose={close}
+        onConfirm={close}
       >
         Close paper {paperLabel}? Reviewers can no longer update answers.
       </ConfirmModal>
@@ -397,6 +415,7 @@ export default function EditorDashboardPage() {
         confirmLabel="Unassign"
         danger
         onClose={close}
+        onConfirm={close}
       >
         {selectedAssignment
           ? `Unassign ${selectedAssignment.reviewerEmail} (${selectedAssignment.assignmentId}) from paper ${selectedPaper?.paperId}?`
