@@ -6,6 +6,7 @@ export interface FieldDef {
   name: string
   label: string
   type?: 'text' | 'number' | 'email' | 'date'
+  defaultValue?: string
 }
 
 interface FormModalProps {
@@ -67,6 +68,7 @@ export default function FormModal({
               id={`field-${f.name}`}
               name={f.name}
               type={f.type ?? 'text'}
+              defaultValue={f.defaultValue}
               required
             />
           </div>

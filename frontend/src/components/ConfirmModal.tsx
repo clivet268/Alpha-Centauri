@@ -6,7 +6,9 @@ interface ConfirmModalProps {
   title: string
   confirmLabel: string
   danger?: boolean
+  busy?: boolean
   onClose: () => void
+  onConfirm?: () => void
   children: ReactNode
 }
 
@@ -15,7 +17,9 @@ export default function ConfirmModal({
   title,
   confirmLabel,
   danger,
+  busy,
   onClose,
+  onConfirm,
   children,
 }: ConfirmModalProps) {
   return (
@@ -25,7 +29,12 @@ export default function ConfirmModal({
         <button type="button" onClick={onClose}>
           Cancel
         </button>
-        <button type="button" className={danger ? 'danger' : undefined}>
+        <button
+          type="button"
+          className={danger ? 'danger' : undefined}
+          disabled={busy}
+          onClick={onConfirm}
+        >
           {confirmLabel}
         </button>
       </div>

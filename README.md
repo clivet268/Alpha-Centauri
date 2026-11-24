@@ -19,6 +19,15 @@ Alpha Centauri group project for WPI 509 Design of Software Systems
 | Publish Rubric | Lucky | ✅ Done |
 | Deprecate Rubric | Lucky | ✅ Done |
 
+## Iteration 2 use cases
+
+| Use Cases | Assigned To | Status |
+| :--- | :---: | ---: |
+| Edit Rubric | Ryan | ✅ Done |
+| Add Question | Ryan | ✅ Done |
+| Delete Question | Ryan | ✅ Done |
+| Edit Question | Ryan | ✅ Done |
+
 ### Demo Videos
 
 Use cases demo videos are in `demo/` directory.

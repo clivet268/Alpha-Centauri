@@ -72,6 +72,54 @@ export const publishRubric = (rubricId: string) =>
 export const duplicateRubric = (rubricId: string, name?: string) =>
   api.post<Rubric>('/rubric/duplicate', { ...designer(), rubricId, name })
 
+export const editRubric = (
+  rubricId: string,
+  changes: {
+    name: string
+    lowThreshold: number | null
+    highThreshold: number | null
+  },
+) =>
+  api.post<{ rubricId: string; updatedAt: string }>('/rubric/edit', {
+    ...designer(),
+    rubricId,
+    ...changes,
+  })
+
+export const addQuestion = (
+  rubricId: string,
+  section: number,
+  text: string,
+  explanations: Record<Rating, string>,
+) =>
+  api.post<{ questionId: string }>('/rubric/question/add', {
+    ...designer(),
+    rubricId,
+    section,
+    text,
+    explanations,
+  })
+
+export const editQuestion = (
+  rubricId: string,
+  questionId: string,
+  text: string,
+  explanations: Record<Rating, string>,
+) =>
+  api.post<{ questionId: string; updatedAt: string }>('/rubric/question/edit', {
+    ...designer(),
+    rubricId,
+    questionId,
+    text,
+    explanations,
+  })
+
+export const deleteQuestion = (rubricId: string, questionId: string) =>
+  api.post<{ questionId: string; deletedAt: string }>(
+    '/rubric/question/delete',
+    { ...designer(), rubricId, questionId },
+  )
+
 export const deprecateRubric = (
   rubricId: string,
   replacementRubricId: string,

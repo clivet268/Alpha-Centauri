@@ -16,6 +16,9 @@ interface RubricTableProps {
   questions: Question[]
   answers?: Answer[]
   viewUrl: string
+  onAddQuestion?: (section: number) => void
+  onEditQuestion?: (questionId: string) => void
+  onDeleteQuestion?: (questionId: string) => void
 }
 
 export default function RubricTable({
@@ -23,6 +26,9 @@ export default function RubricTable({
   questions,
   answers = [],
   viewUrl,
+  onAddQuestion,
+  onEditQuestion,
+  onDeleteQuestion,
 }: RubricTableProps) {
   const hasActionColumn = mode === 'edit' || mode === 'answer'
   let questionNumber = 0
@@ -68,13 +74,19 @@ export default function RubricTable({
                         (a) => a.questionId === q.questionId,
                       )}
                       number={questionNumber}
+                      onEdit={onEditQuestion}
+                      onDelete={onDeleteQuestion}
                     />
                   )
                 })}
               {mode === 'edit' && (
                 <tr>
                   <td className="full-row">
-                    <button type="button" className="rowbutton">
+                    <button
+                      type="button"
+                      className="rowbutton"
+                      onClick={() => onAddQuestion?.(i + 1)}
+                    >
                       Add Question
                     </button>
                   </td>
@@ -93,13 +105,16 @@ function QuestionRows({
   question: q,
   answer,
   number,
+  onEdit,
+  onDelete,
 }: {
   mode: RubricTableMode
   question: Question
   answer?: Answer
   number: number
+  onEdit?: (questionId: string) => void
+  onDelete?: (questionId: string) => void
 }) {
-  const editable = mode === 'edit'
   const guidance = q.explanations
     .map((text, i) => (text ? `${RATINGS[i]} = ${text}` : ''))
     .filter(Boolean)
@@ -108,13 +123,7 @@ function QuestionRows({
   return (
     <>
       <tr>
-        <td
-          className="text-cell"
-          contentEditable={editable}
-          suppressContentEditableWarning
-        >
-          {q.text}
-        </td>
+        <td className="text-cell">{q.text}</td>
 
         {RATINGS.map((rating) => {
           const picked = mode === 'review' && answer?.rating === rating
@@ -140,20 +149,23 @@ function QuestionRows({
           )
         })}
 
-        <td
-          className="text-cell"
-          contentEditable={editable}
-          suppressContentEditableWarning
-        >
-          {guidance}
-        </td>
+        <td className="text-cell">{guidance}</td>
 
         {mode === 'edit' && (
           <td>
             <button
               type="button"
+              className="rowbutton"
+              title="Edit this question"
+              onClick={() => onEdit?.(q.questionId)}
+            >
+              Edit
+            </button>
+            <button
+              type="button"
               className="rowbutton danger"
               title="Delete this question"
+              onClick={() => onDelete?.(q.questionId)}
             >
               Delete
             </button>
