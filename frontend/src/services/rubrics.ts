@@ -52,6 +52,7 @@ export const getRubric = (rubricId: string) =>
 export const viewRubric = (rubricId: string) =>
   api.get<Rubric>('/rubric/view', { params: { rubricId } })
 
+// Rubric writes carry the logged-in designer's ID (see session.ts); the server answers 401 without it.
 const designer = () => ({ designerId: getStoredDesignerId() ?? undefined })
 
 export const createRubric = (name: string) =>

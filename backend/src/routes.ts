@@ -12,6 +12,8 @@ export const routes = {
   'GET /journal/dashboard': 'journal/dashboard',
   'POST /journal/register': 'journal/register',
   'POST /journal/login': 'journal/login',
+  'POST /review/access': 'reviewer/access',
+  'POST /review/answer': 'reviewer/answer',
   'POST /issue/create': 'issue/create',
 } as const
 
