@@ -19,6 +19,8 @@ export const routes = {
   'POST /review/access': 'reviewer/access',
   'POST /review/answer': 'reviewer/answer',
   'POST /issue/create': 'issue/create',
+  'DELETE /issue/delete': 'issue/delete',
+  'POST /paper/add': 'paper/add',
 } as const
 
 export type RouteKey = keyof typeof routes
