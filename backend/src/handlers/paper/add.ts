@@ -5,13 +5,7 @@ import { conflict, handle, notFound, parseBody } from '../../shared/http.ts'
 const Body = z.object({
   issueId: z.string().startsWith('is_'),
   title: z.string().trim().min(1),
-  doi: z
-    .string()
-    .trim()
-    .regex(
-      /^(https?:\/\/(dx\.)?doi\.org\/)?10\.\d{4,9}\/[-._;()/:A-Z0-9]+$/i,
-      "Invalid DOI format"
-    )
+  doi: z.url("Invalid URL format")
 })
 
 export interface AddPaperResponse {

@@ -371,7 +371,7 @@ export default function EditorDashboardPage() {
         title={`Add Paper to Issue ${selectedIssue?.issueId ?? ''}`}
         fields={[
           { name: 'paperTitle', label: 'Title' },
-          { name: 'paperDoi', label: 'DOI / URL' },
+          { name: 'paperDoi', label: 'URL' },
         ]}
         onClose={close}
         onSubmit ={async ({ paperTitle, paperDoi }) => {
